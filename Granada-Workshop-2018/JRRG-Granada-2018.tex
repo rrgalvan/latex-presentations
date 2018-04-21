@@ -37,11 +37,10 @@
 
 %<<<<<<<<<<<<< beamer style
 
-\title[DG Approximations to Anisotropic Stokes]{On stability of Discontinous Galerkin Approximations to Anisotropic Stokes Equations}
-\author[J.R. Rodr\'{\i}guez Galv\'an]{\em J. Rafael Rodr\'{\i}guez Galv\'an,
-  \\[1.5ex]
-  \scriptsize F. Guillén González, \and M.V. Redondo Neble}
-\date{\today}
+\title[DG Approximations to Anisotropic Stokes]{Discontinuous Galerkin Approximation of
+Anisotropic Viscous Flows}
+\author[J.R. Rodr\'{\i}guez Galv\'an]{\em J. Rafael Rodr\'{\i}guez Galv\'an}
+\date{Granada. April 25, 2018}
 
 % XeLaTeX font choosing
 % \usepackage{fontspec}%{xltxtra} %fontspec}
@@ -156,6 +155,8 @@
 
 % ... end of preamble.
 
+\AtBeginSection{\frame{\sectionpage}}
+
 %======================================================================
 \begin{document}
 %======================================================================
@@ -215,14 +216,120 @@
 
 \newcommand{\imgdir}{Undefined, use renewcommand!}
 
+\section{DG Formulation of Elliptic PDE}
+\label{sec:dg-elliptic-PDE}
+
+
+%---------------------------------------------------------------------
+\begin{frame}{Notation}
+%---------------------------------------------------------------------
+  \begin{itemize}
+    \itemsep=0.95em
+  \item \structure{$\Th$}: family of meshes of the domain $\Omega\subset\Rset^d$
+  \item For instance, simplicial elements \structure{$K$} satisfying usual
+    regularity:
+    $$
+    \exists \rho>0 \ /\ \rho\, h_K \le r_K \quad \forall K\in\Th,
+    $$
+  \item \structure{$\Eh$}: set of faces (edges in $2D$)\quad
+    \llaveizq{\structure{$\Ehi$}: interior faces,\\[0.3em] \structure{$\Ehb$}: boundary faces}
+  \item If $e=K^+\cap K^-\in\Ehi$ \llaveizq{jump: $\structure{\jump{u}_e}:= u|_{K^+}-u|_{K^-}$, \\[0.4em]
+   mean: $\structure{\average{u}_e} := \frac12 (u|_{K^+}+u|_{K^-})$}
+ \medskip
+ \begin{itemize}
+ \item[$\star$] If $e\in\Ehb$: $\jump{u}_e:= \average{u}_e:= u_e$
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------
+\begin{frame}{Notation II}
+%---------------------------------------------------------------------
+  \begin{itemize}
+    \itemsep=0.95em
+  \item \textit{Broken} Sobolev space:
+    \begin{equation*}
+      \structure{H^m(\Th)} := \big\{ u\in L^2(\Omega) \ |\ u\in H^m(K)\ \forall K\in\Th \big\},
+    \end{equation*}
+  \item Broken gradient operator \structure{$\gradh$}:
+    $\forall u\in H^1(\Th)$,
+    $$
+    (\gradh u)|_K=\grad(u|_K)\quad \forall\, K\in\Th
+    $$
+  \item Discontinous finite-dimensional subspace of $H^m(\Th)$:
+    $$
+    \structure{\Pd h^k}:=
+    \left\{
+      u\in L^2(\Omega) \ | \ u\in \Polin{k}(K), \ \forall K\in\Th \right \}.
+    $$
+  \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------
+\begin{frame}{SIP (Symmetric Interior Penalty) Bilinear Form}
+% ---------------------------------------------------------------------
+  \textbf{\itshape Poisson problem} (homogeneous Dirichlet b.c.)
+  % \vspace{-1em}
+  \begin{center}
+    + integration by parts in each element
+    \small\cite{arnold_interior_1982,di_pietro_ern_2012}
+    \quad
+    $\leadsto$
+  \end{center}
+  \vspace{-1em}
+  \begin{multline*}
+    \asip[sip,\alert<3>{\eta}](\uh,\buh) = \int_\Omega \gradh \uh \cdot\gradh\buh
+    \\
+    \framedmath<2>{\displaystyle - \sum_{e\in\Eh} \int_e\big( \average{\gradh \uh}\cdot \nn_e \jump{\buh}
+      + \jump{\uh} \average{\gradh\buh}\cdot \nn_e \big)
+    }
+    \\
+    + \framedmath<3>{\displaystyle\alert<3>{\mathbf{\eta}}\sum_{e\in\Eh} \frac1{h_e} \int_e \jump{\uh}\jump{\buh}},
+    \quad \forall\,\uh,\buh\in \Pd h^k
+  \end{multline*}
+  \vspace{-1em}
+  \begin{itemize}
+  \item<2> \myframed{Consistency and symmetry}
+  \item<3> \myframed{Coercivity (for $\alert<3>{\mathbf{\eta}>0}$ big enough)}
+  \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------
+\begin{frame}{SIP (Symmetric Interior Penalty) Bilinear Form II}
+  % ---------------------------------------------------------------------
+  \begin{definition}[SIP norm]
+    \begin{equation*}
+      \normsip{u} = \big(\, \norm[]{\gradh u}^2 + \seminormU{u}^2 \;\big) ^{1/2},
+    \end{equation*}
+    where
+    \begin{equation*}
+      \seminormU{u} =
+      \Big (\sum_{e\in\Eh} \frac1{h_e} \int_e {\jump u}^2 \Big ) ^{1/2} \quad \text{(\textit{jump seminorm})}.
+    \end{equation*}
+  \end{definition}
+  \begin{lemma}[Coercivity and Continuity]
+    \begin{itemize}
+    \item Exists $C(\eta)>0$ such that
+      \begin{equation*}
+        \asip[sip,\eta](\uh,\uh) \ge C(\eta) \normsip{\uh}^2, \quad \forall\,\uh\in \Pd h^k
+      \end{equation*}
+    \item Exists $ C_{\text{bnd}}>0$ such that
+      \begin{equation*}
+        \label{eq:sip:boundedness}
+        \asip[sip,\eta](\uh,\buh) \le C_{\text{bnd}} \normsip{\uh}\normsip{\buh}, \quad \forall\,\uh,\buh\in \Pd h^k
+      \end{equation*}
+    \end{itemize}
+  \end{lemma}
+  \begin{flushright}
+    \scriptsize \textbf{Proof}: see e.g.\cite{di_pietro_ern_2012}
+  \end{flushright}
+\end{frame}
+
 %%,---------------------------------------------------------------------
 %%| Introduction
 %%`---------------------------------------------------------------------
 \section[Introduction]{Stability of Anisotropic Stokes Equations}
 \label{sec:introduction}
-
-\begin{sectionframe}
-\end{sectionframe}
 
 \begin{frame}{Anisotropic equations for (large scale) ocean}
 %----------------------------------------------------------------------
@@ -543,116 +650,10 @@
   \end{description}
 \end{frame}
 
+
+
 \section[DG Formulation]{SIP DG Formulation for Anisotropic Stokes}
-\label{sec:dg-formulation}
-
-\begin{sectionframe}
-\end{sectionframe}
-
-%---------------------------------------------------------------------
-\begin{frame}{Notation}
-%---------------------------------------------------------------------
-  \begin{itemize}
-    \itemsep=0.95em
-  \item \structure{$\Th$}: family of meshes of the domain $\Omega\subset\Rset^d$
-  \item For instance, simplicial elements \structure{$K$} satisfying usual
-    regularity:
-    $$
-    \exists \rho>0 \ /\ \rho\, h_K \le r_K \quad \forall K\in\Th,
-    $$
-  \item \structure{$\Eh$}: set of faces (edges in $2D$)\quad
-    \llaveizq{\structure{$\Ehi$}: interior faces,\\[0.3em] \structure{$\Ehb$}: boundary faces}
-  \item If $e=K^+\cap K^-\in\Ehi$ \llaveizq{jump: $\structure{\jump{u}_e}:= u|_{K^+}-u|_{K^-}$, \\[0.4em]
-   mean: $\structure{\average{u}_e} := \frac12 (u|_{K^+}+u|_{K^-})$}
- \medskip
- \begin{itemize}
- \item[$\star$] If $e\in\Ehb$: $\jump{u}_e:= \average{u}_e:= u_e$
- \end{itemize}
-\end{itemize}
-\end{frame}
-
-%---------------------------------------------------------------------
-\begin{frame}{Notation II}
-%---------------------------------------------------------------------
-  \begin{itemize}
-    \itemsep=0.95em
-  \item \textit{Broken} Sobolev space:
-    \begin{equation*}
-      \structure{H^m(\Th)} := \big\{ u\in L^2(\Omega) \ |\ u\in H^m(K)\ \forall K\in\Th \big\},
-    \end{equation*}
-  \item Broken gradient operator \structure{$\gradh$}:
-    $\forall u\in H^1(\Th)$,
-    $$
-    (\gradh u)|_K=\grad(u|_K)\quad \forall\, K\in\Th
-    $$
-  \item Discontinous finite-dimensional subspace of $H^m(\Th)$:
-    $$
-    \structure{\Pd h^k}:=
-    \left\{
-      u\in L^2(\Omega) \ | \ u\in \Polin{k}(K), \ \forall K\in\Th \right \}.
-    $$
-  \end{itemize}
-\end{frame}
-
-%---------------------------------------------------------------------
-\begin{frame}{SIP (Symmetric Interior Penalty) Bilinear Form}
-% ---------------------------------------------------------------------
-  \textbf{\itshape Poisson problem} (homogeneous Dirichlet b.c.)
-  % \vspace{-1em}
-  \begin{center}
-    + integration by parts in each element
-    \small\cite{arnold_interior_1982,di_pietro_ern_2012}
-    \quad
-    $\leadsto$
-  \end{center}
-  \vspace{-1em}
-  \begin{multline*}
-    \asip[sip,\alert<3>{\eta}](\uh,\buh) = \int_\Omega \gradh \uh \cdot\gradh\buh
-    \\
-    \framedmath<2>{\displaystyle - \sum_{e\in\Eh} \int_e\big( \average{\gradh \uh}\cdot \nn_e \jump{\buh}
-      + \jump{\uh} \average{\gradh\buh}\cdot \nn_e \big)
-    }
-    \\
-    + \framedmath<3>{\displaystyle\alert<3>{\mathbf{\eta}}\sum_{e\in\Eh} \frac1{h_e} \int_e \jump{\uh}\jump{\buh}},
-    \quad \forall\,\uh,\buh\in \Pd h^k
-  \end{multline*}
-  \vspace{-1em}
-  \begin{itemize}
-  \item<2> \myframed{Consistency and symmetry}
-  \item<3> \myframed{Coercivity (for $\alert<3>{\mathbf{\eta}>0}$ big enough)}
-  \end{itemize}
-\end{frame}
-
-%---------------------------------------------------------------------
-\begin{frame}{SIP (Symmetric Interior Penalty) Bilinear Form II}
-  % ---------------------------------------------------------------------
-  \begin{definition}[SIP norm]
-    \begin{equation*}
-      \normsip{u} = \big(\, \norm[]{\gradh u}^2 + \seminormU{u}^2 \;\big) ^{1/2},
-    \end{equation*}
-    where
-    \begin{equation*}
-      \seminormU{u} =
-      \Big (\sum_{e\in\Eh} \frac1{h_e} \int_e {\jump u}^2 \Big ) ^{1/2} \quad \text{(\textit{jump seminorm})}.
-    \end{equation*}
-  \end{definition}
-  \begin{lemma}[Coercivity and Continuity]
-    \begin{itemize}
-    \item Exists $C(\eta)>0$ such that
-      \begin{equation*}
-        \asip[sip,\eta](\uh,\uh) \ge C(\eta) \normsip{\uh}^2, \quad \forall\,\uh\in \Pd h^k
-      \end{equation*}
-    \item Exists $ C_{\text{bnd}}>0$ such that
-      \begin{equation*}
-        \label{eq:sip:boundedness}
-        \asip[sip,\eta](\uh,\buh) \le C_{\text{bnd}} \normsip{\uh}\normsip{\buh}, \quad \forall\,\uh,\buh\in \Pd h^k
-      \end{equation*}
-    \end{itemize}
-  \end{lemma}
-  \begin{flushright}
-    \scriptsize \textbf{Proof}: see e.g.\cite{di_pietro_ern_2012}
-  \end{flushright}
-\end{frame}
+\label{sec:Stokes-dg-formulation}
 
 %---------------------------------------------------------------------
 \begin{frame}{DG Bilinear Form for Anisotropic Stokes}
