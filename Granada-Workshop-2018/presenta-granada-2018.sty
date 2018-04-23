@@ -68,11 +68,12 @@
 \newcommand{\dmin}{D_\text{min}}
 \newcommand{\dmax}{D_\text{max}}
 
-\renewcommand{\P}[1]{\ensuremath{\mathcal{P}_{#1}}\xspace}
-\newcommand{\Pd}[1]{\ensuremath{\mathcal{P}_{#1}}\xspace}
+\renewcommand{\P}[1]{\ensuremath{\mathbb{P}_{#1}}\xspace}
+\newcommand{\Pd}[1]{\ensuremath{\mathbb{P}^{\mathrm{d}}_{#1}}\xspace}
 \newcommand{\Pb}{\P{1,b}}
-\newcommand{\Q}[1]{\ensuremath{\mathcal{Q}_{#1}}\xspace}
-\newcommand{\Polin}[1]{\ensuremath{{\mathbb P}_{#1}}}
+\newcommand{\Q}[1]{\ensuremath{\mathbb{Q}_{#1}}\xspace}
+\newcommand{\Qd}[1]{\ensuremath{\mathbb{Q}^{\mathcal d}_{#1}}\xspace}
+% \newcommand{\Polin}[1]{\ensuremath{{\mathbb P}_{#1}}}
 
 %\newcommand{\st}{\ / \ }
 
@@ -274,7 +275,6 @@
 \newcommand{\ConstCoerciv}{\alpha}
 \newcommand{\ConstInfSup}{\beta}
 
-\newcommand{\product}[1]{\Big(#1\Big)}
 
 \renewcommand{\AA}{\mathcal{A}}
 \newcommand{\LL}{{\mathcal{L}}}
@@ -459,5 +459,11 @@
 \newcommand{\seminormVeps}[2][\varepsilon]{\ensuremath{|#2|_{#1,\mathit{V}}}}
 \newcommand{\normvel}[1]{\norm[\mathrm{anis}]{#1}}
 \newcommand{\normveleps}[1]{\norm[\mathrm{anis},\varepsilon]{#1}}
+
+\newcommand{\prodEsc}[2][]{\left(#2\right)_{#1}}
+\newcommand{\prodBroken}[2][H^1(\Th)]{\left(#2\right)_{#1}}
+\newcommand{\normBroken}[2][H^1(\Th)]{\norm[#1]{#2}}
+
+% \newcommand{\Pdisc}[1]{\ensuremath{\mathbb{P^d}_{#1}}\xspace}
 
 \newcommand{\Ctrace}{\ensuremath{C_{\mathit{tr}}}}
