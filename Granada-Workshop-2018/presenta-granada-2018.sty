@@ -69,7 +69,7 @@
 \newcommand{\dmax}{D_\text{max}}
 
 \renewcommand{\P}[1]{\ensuremath{\mathbb{P}_{#1}}\xspace}
-\newcommand{\Pd}[1]{\ensuremath{\mathbb{P}^{\mathrm{d}}_{#1}}\xspace}
+\newcommand{\Pd}[1]{\ensuremath{\mathbb{P}^{\mathcal{d}}_{#1}}\xspace}
 \newcommand{\Pb}{\P{1,b}}
 \newcommand{\Q}[1]{\ensuremath{\mathbb{Q}_{#1}}\xspace}
 \newcommand{\Qd}[1]{\ensuremath{\mathbb{Q}^{\mathcal d}_{#1}}\xspace}
@@ -77,67 +77,106 @@
 
 %\newcommand{\st}{\ / \ }
 
-%\newcommand{\uu}{\vect{u}}
-\newcommand{\ux}{u_1}
-\newcommand{\uy}{u_2}
-\newcommand{\uz}{u_3}
+% %\newcommand{\uu}{\vect{u}}
+% \newcommand{\ux}{u_1}
+% \newcommand{\uy}{u_2}
+% \newcommand{\uz}{u_3}
+% \newcommand{\vv}{\vect{v}}
+% \newcommand{\vz}{v_3}
+% \newcommand{\ww}{\vect{w}}
+% \newcommand{\wz}{v_3}
+% \newcommand{\ps}{p_s}
+% \newcommand{\qs}{q_s}
+% \newcommand{\ff}{\vect{f}}
+% \newcommand{\FF}{\vect{F}}
+% \newcommand{\gs}{\vect{g}_{s}}
+% \newcommand{\pp}{p}
+% \newcommand{\qq}{q}
+
+\newcommand{\Fh}{\ensuremath{\vect{F}_h}}
+
 \newcommand{\vv}{\vect{v}}
-\newcommand{\vz}{v_3}
 \newcommand{\ww}{\vect{w}}
-\newcommand{\wz}{v_3}
-\newcommand{\ps}{p_s}
-\newcommand{\qs}{q_s}
 \newcommand{\ff}{\vect{f}}
-\newcommand{\FF}{\vect{F}}
 \newcommand{\gs}{\vect{g}_{s}}
 \newcommand{\pp}{p}
 \newcommand{\qq}{q}
 
-\newcommand{\Fh}{\ensuremath{\vect{F}_h}}
-
+\newcommand{\uh}{{u_{h}}}
+\newcommand{\uuh}{{\uu_{h}}}
+\newcommand{\vh}{{v_{h}}}
+\newcommand{\wh}{{w_{h}}}
 \newcommand{\wwh}{{\ww_{h}}}
 \newcommand{\uum}{{\uu^{m}}}
 \newcommand{\uumm}{{\uu^{m+1}}}
+\newcommand{\vm}{{v^{m}}}
+\newcommand{\vmm}{{v^{m+1}}}
+\newcommand{\uzh}{{u_{3,h}}}
+\newcommand{\vzh}{{v_{3,h}}}
+\newcommand{\ph}{{p_{h}}}
+\newcommand{\qh}{{q_{h}}}
 
-\newcommand{\uuh}{{\uu_{h}}}
+\newcommand{\bu}{\overline u}
 \newcommand{\buu}{\overline \uu}
+\newcommand{\bv}{\overline v}
+\newcommand{\bvv}{\overline \vv}
+\newcommand{\bw}{\overline w}
 \newcommand{\bww}{\overline \ww}
-\newcommand{\buuh}{{\overline{\uu}_h}}
-\newcommand{\bwwh}{{\overline{\ww}_h}}
+\newcommand{\bp}{\overline \pp}
 
-\newcommand{\Te}{T\xspace}
-\newcommand{\Sa}{S\xspace}
-\newcommand{\uh}{\uu_{h}}
-\newcommand{\vh}{\vv_{h}}
-\newcommand{\wh}{\ww_{h}}
-\newcommand{\um}{\uh^{m}}
-\newcommand{\umm}{\uh^{m+1}}
-\newcommand{\vm}{\vh^{m}}
-\newcommand{\vmm}{\vh^{m+1}}
-\newcommand{\wm}{\wh^{m}}
-\newcommand{\wmm}{\wh^{m+1}}
-\newcommand{\uzh}{u_{3,h}}
-\newcommand{\vzh}{v_{3,h}}
-\newcommand{\ph}{p_{h}}
-\newcommand{\qh}{q_{h}}
-\renewcommand{\pm}{\ph^m}
-\newcommand{\pmm}{\ph^{m+1}}
-\newcommand{\Teh}{\Te_h}
-\newcommand{\Tem}{\Te_h^m}
-\newcommand{\Temm}{\Te_h^{m+1}}
-\newcommand{\Sah}{\Sa_h}
-\newcommand{\Sam}{\Sa_h^m}
-\newcommand{\Samm}{\Sa_h^{m+1}}
-\newcommand{\bu}{\overline \uu}
-\newcommand{\bv}{\overline \vv}
-\newcommand{\bw}{\overline \ww}
-\newcommand{\bp}{\overline \pp_h}
-\newcommand{\bT}{\overline{T}_h}
-\newcommand{\bS}{\overline{S}_h}
-\newcommand{\buh}{\overline{\uu}_h}
-\newcommand{\bvh}{\overline{\vv}_h}
-\newcommand{\bwh}{\overline{\ww}_h}
-\newcommand{\bph}{\overline{\pp}_h}
+\newcommand{\buh}{{\overline{u}_h}}
+\newcommand{\buuh}{{\overline{\uu}_h}}
+\newcommand{\bvh}{{\overline{v}_h}}
+\newcommand{\bvvh}{{\overline{\vv}_h}}
+\newcommand{\bwh}{{\overline{w}_h}}
+\newcommand{\bwwh}{{\overline{\ww}_h}}
+\newcommand{\bph}{{\overline{\pp}_h}}
+
+
+
+% \newcommand{\wwh}{{\ww_{h}}}
+% \newcommand{\uum}{{\uu^{m}}}
+% \newcommand{\uumm}{{\uu^{m+1}}}
+
+% \newcommand{\uuh}{{\uu_{h}}}
+% \newcommand{\buu}{\overline \uu}
+% \newcommand{\bww}{\overline \ww}
+% \newcommand{\buuh}{{\overline{\uu}_h}}
+% \newcommand{\bwwh}{{\overline{\ww}_h}}
+
+% \newcommand{\Te}{T\xspace}
+% \newcommand{\Sa}{S\xspace}
+% \newcommand{\uh}{\uu_{h}}
+% \newcommand{\vh}{\vv_{h}}
+% \newcommand{\wh}{\ww_{h}}
+% \newcommand{\um}{\uh^{m}}
+% \newcommand{\umm}{\uh^{m+1}}
+% \newcommand{\vm}{\vh^{m}}
+% \newcommand{\vmm}{\vh^{m+1}}
+% \newcommand{\wm}{\wh^{m}}
+% \newcommand{\wmm}{\wh^{m+1}}
+% \newcommand{\uzh}{u_{3,h}}
+% \newcommand{\vzh}{v_{3,h}}
+% \newcommand{\ph}{p_{h}}
+% \newcommand{\qh}{q_{h}}
+% \renewcommand{\pm}{\ph^m}
+% \newcommand{\pmm}{\ph^{m+1}}
+% \newcommand{\Teh}{\Te_h}
+% \newcommand{\Tem}{\Te_h^m}
+% \newcommand{\Temm}{\Te_h^{m+1}}
+% \newcommand{\Sah}{\Sa_h}
+% \newcommand{\Sam}{\Sa_h^m}
+% \newcommand{\Samm}{\Sa_h^{m+1}}
+% \newcommand{\bu}{\overline \uu}
+% \newcommand{\bv}{\overline \vv}
+% \newcommand{\bw}{\overline \ww}
+% \newcommand{\bp}{\overline \pp_h}
+% \newcommand{\bT}{\overline{T}_h}
+% \newcommand{\bS}{\overline{S}_h}
+% \newcommand{\buh}{\overline{\uu}_h}
+% \newcommand{\bvh}{\overline{\vv}_h}
+% \newcommand{\bwh}{\overline{\ww}_h}
+% \newcommand{\bph}{\overline{\pp}_h}
 
 \newcommand{\pstarm}{\pp^{\star,m}}
 \newcommand{\pstarmm}{\pp^{\star,m+1}}
@@ -212,12 +251,7 @@
 
 
 % Elements of the spaces
-\renewcommand{\vv}{v}
-
-\renewcommand{\bu}{\overline \uu}
-\renewcommand{\bv}{\overline \vv}
-\renewcommand{\bp}{\overline \pp}
-\renewcommand{\bw}{\overline \ww}
+% \renewcommand{\vv}{v}
 
 \newcommand{\cc}{\boldsymbol{\chi}}
 \newcommand{\bc}{\boldsymbol{\overline\chi}}
@@ -442,8 +476,8 @@
 
 % ---------- Discontinous Galerkin ----------------
 \newcommand{\Eh}{\ensuremath{{\cal E}_h}\xspace}
-\newcommand{\Ehi}{\ensuremath{{\cal E}_h^0}\xspace}
-\newcommand{\Ehb}{\ensuremath{{\cal E}_h^\partial}\xspace}
+\newcommand{\Ehi}{\ensuremath{{\cal E}_h^{\mathcal{i}}}\xspace}
+\newcommand{\Ehb}{\ensuremath{{\cal E}_h^{\mathcal{b}}\xspace}}
 
 \newcommand{\jump}[1]{\ensuremath{\left[\!\left[#1\right]\!\right]}\xspace}
 \newcommand{\average}[1]{\ensuremath{\left\{\!\!\left\{#1\right\}\!\!\right\}}\xspace}

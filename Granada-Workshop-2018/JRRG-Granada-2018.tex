@@ -11,10 +11,14 @@
 \usepackage{colortbl}
 \usepackage{units}
 
-\usepackage{calrsfs}
+% \usepackage{calrsfs}
 % \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
 % \usepackage{calligra}
-\usepackage[T1]{fontenc}
+\usepackage[cal=boondox]{mathalfa}
+% \usepackage{bickham}
+% \usepackage{boondox-cal}
+% \usepackage{boondox-calo}
+% \usepackage{dutchcal}
 
 %% Beamer style >>>>>>>>>>>>>>>>>>>>>>>>>
 \mode<presentation>
@@ -487,6 +491,14 @@ the DG methods: (...)
       \jump{v}=0 \quad \forall e\in\Ehi
       $$
     \end{theorem}
+
+    \begin{theorem}[Characterization of $H(div,\Omega)$]
+      A function $\vv\in H(div,\Th)\cap W^{1,1}(\Th)^d$ belongs to
+      $H(div,\Omega)$ if and only if
+      $$
+      \jump{\vv}\cdot\nn_e=0 \quad \forall e\in\Ehi
+      $$
+    \end{theorem}
 \end{frame}
 %============================================================================
 \section{DG Formulation of Elliptic PDE}
@@ -494,79 +506,105 @@ the DG methods: (...)
 \label{sec:dg-elliptic-PDE}
 
 
-%---------------------------------------------------------------------
-\begin{frame}{Preliminary Concepts and Notation}
-%---------------------------------------------------------------------
-  \begin{itemize}
-    \itemsep=0.95em
-  \item \structure{$\Th$}: family of meshes of the domain $\Omega\subset\Rset^d$
-  \item For instance, simplicial elements \structure{$K$} satisfying usual
-    regularity:
-    $$
-    \exists \rho>0 \ /\ \rho\, h_K \le r_K \quad \forall K\in\Th,
-    $$
-  \item \structure{$\Eh$}: set of faces (edges in $2D$)\quad
-    \llaveizq{\structure{$\Ehi$}: interior faces,\\[0.3em] \structure{$\Ehb$}: boundary faces}
-  \item If $e=K^+\cap K^-\in\Ehi$ \llaveizq{jump: $\structure{\jump{u}_e}:= u|_{K^+}-u|_{K^-}$, \\[0.4em]
-   mean: $\structure{\average{u}_e} := \frac12 (u|_{K^+}+u|_{K^-})$}
- \medskip
- \begin{itemize}
- \item[$\star$] If $e\in\Ehb$: $\jump{u}_e:= \average{u}_e:= u_e$
- \end{itemize}
-\end{itemize}
-\end{frame}
+% %---------------------------------------------------------------------
+% \begin{frame}{Preliminary Concepts and Notation}
+% %---------------------------------------------------------------------
+%   \begin{itemize}
+%     \itemsep=0.95em
+%   \item \structure{$\Th$}: family of meshes of the domain $\Omega\subset\Rset^d$
+%   \item For instance, simplicial elements \structure{$K$} satisfying usual
+%     regularity:
+%     $$
+%     \exists \rho>0 \ /\ \rho\, h_K \le r_K \quad \forall K\in\Th,
+%     $$
+%   \item \structure{$\Eh$}: set of faces (edges in $2D$)\quad
+%     \llaveizq{\structure{$\Ehi$}: interior faces,\\[0.3em] \structure{$\Ehb$}: boundary faces}
+%   \item If $e=K^+\cap K^-\in\Ehi$ \llaveizq{jump: $\structure{\jump{u}_e}:= u|_{K^+}-u|_{K^-}$, \\[0.4em]
+%    mean: $\structure{\average{u}_e} := \frac12 (u|_{K^+}+u|_{K^-})$}
+%  \medskip
+%  \begin{itemize}
+%  \item[$\star$] If $e\in\Ehb$: $\jump{u}_e:= \average{u}_e:= u_e$
+%  \end{itemize}
+% \end{itemize}
+% \end{frame}
 
+% %---------------------------------------------------------------------
+% \begin{frame}{Notation II}
+% %---------------------------------------------------------------------
+%   \begin{itemize}
+%     \itemsep=0.95em
+%   \item \textit{Broken} Sobolev space:
+%     \begin{equation*}
+%       \structure{H^m(\Th)} := \big\{ u\in L^2(\Omega) \ |\ u\in H^m(K)\ \forall K\in\Th \big\},
+%     \end{equation*}
+%   \item Broken gradient operator \structure{$\gradh$}:
+%     $\forall u\in H^1(\Th)$,
+%     $$
+%     (\gradh u)|_K=\grad(u|_K)\quad \forall\, K\in\Th
+%     $$
+%   \item Discontinous finite-dimensional subspace of $H^m(\Th)$:
+%     $$
+%     \structure{\Pd k(\Th)}:=
+%     \left\{
+%       u\in L^2(\Omega) \ | \ u\in \P{k}(K), \ \forall K\in\Th \right \}.
+%     $$
+%     \begin{flushright}
+%       \footnotesize
+%       \color{gray} Polinomials of degree at most $k$
+%     \end{flushright}
+%     \begin{itemize}
+%     \item Test functions are \textbf{discontinuous} along the \textbf{edges} (or faces)
+%     \end{itemize}
+%   %   $$
+%   %   \structure{\Qd k(\Th)}:=
+%   %   \left\{
+%   %     u\in L^2(\Omega) \ | \ u\in \Q{k}(K), \ \forall K\in\Th \right \}.
+%   %   $$
+%   %   \begin{flushright}
+%   %     \footnotesize
+%   %     \color{gray} Polinomials of degree at most $k$ in each variable
+%   %   \end{flushright}
+%   \end{itemize}
+% \end{frame}
 %---------------------------------------------------------------------
-\begin{frame}{Notation II}
-%---------------------------------------------------------------------
+\begin{frame}{Model Problem}
+% ---------------------------------------------------------------------
   \begin{itemize}
-    \itemsep=0.95em
-  \item \textit{Broken} Sobolev space:
+  \item Let $\displaystyle \Omega\subset\Rset^d, \quad
+    \partial\Omega=\Gamma_D\cup\Gamma_N$
+  \item
+    For $f\in L^2(\Omega)$, $g_D\in H^{1/2}(\Gamma_D)$,
+    $g_N\in\L^2(\Gamma_N)$, we consider the problem:
     \begin{equation*}
-      \structure{H^m(\Th)} := \big\{ u\in L^2(\Omega) \ |\ u\in H^m(K)\ \forall K\in\Th \big\},
+      \left\{
+        \begin{aligned}
+          -\Delta u = f & \text{ in } \Omega
+          \\
+          p = g_D & \text{ on } \Gamma_D
+          \\
+          \grad p \cdot\nn = g_N & \text{ on } \Gamma_N
+        \end{aligned}
+      \right.
     \end{equation*}
-  \item Broken gradient operator \structure{$\gradh$}:
-    $\forall u\in H^1(\Th)$,
-    $$
-    (\gradh u)|_K=\grad(u|_K)\quad \forall\, K\in\Th
-    $$
-  \item Discontinous finite-dimensional subspace of $H^m(\Th)$:
-    $$
-    \structure{\Pd k(\Th)}:=
-    \left\{
-      u\in L^2(\Omega) \ | \ u\in \P{k}(K), \ \forall K\in\Th \right \}.
-    $$
-    \begin{flushright}
-      \footnotesize
-      \color{gray} Polinomials of degree at most $k$
-    \end{flushright}
-    \begin{itemize}
-    \item Test functions are \textbf{discontinuous} along the \textbf{edges} (or faces)
-    \end{itemize}
-  %   $$
-  %   \structure{\Qd k(\Th)}:=
-  %   \left\{
-  %     u\in L^2(\Omega) \ | \ u\in \Q{k}(K), \ \forall K\in\Th \right \}.
-  %   $$
-  %   \begin{flushright}
-  %     \footnotesize
-  %     \color{gray} Polinomials of degree at most $k$ in each variable
-  %   \end{flushright}
+  \item For simplicity: $\Gamma_D=\partial\Omega$, $g_D=0$.
+  \item Lax-Milgram $\Rightarrow$ $\exists!$ weak solution
+    $u\in V=H_0^1(\Omega)$ s. t:
+    \begin{align*}
+    \int_\Omega \grad u \grad \bu &= \int_\Omega f\bu \quad \forall \bu\in V
+      \\[1ex]
+    \small \text{And moreover: } \norm[V]{u} &\le \frac 1\alpha \norm{f}
+    \end{align*}
+  \item General case ($\Gamma_N\neq 0$): changes in RHS and V
   \end{itemize}
 \end{frame}
 
-%---------------------------------------------------------------------
-\begin{frame}{SIP (Symmetric Interior Penalty) Bilinear Form}
+%----------------------------------------------------------------------
+\begin{frame}{SIP (Symmetric Interior Penalty) Discontinuous Galerkin}
 % ---------------------------------------------------------------------
-  \textbf{\itshape Poisson problem} (homogeneous Dirichlet b.c.)
-  % \vspace{-1em}
-  \begin{center}
-    + integration by parts in each element
-    \small\cite{arnold_interior_1982,di_pietro_ern_2012}
+    Integration by parts in each element
     \quad
     $\leadsto$
-  \end{center}
-  \vspace{-1em}
+
   \begin{multline*}
     \asip[sip,\alert<3>{\eta}](\uh,\buh) = \int_\Omega \gradh \uh \cdot\gradh\buh
     \\
@@ -615,9 +653,106 @@ the DG methods: (...)
   \end{flushright}
 \end{frame}
 
-% %%,---------------------------------------------------------------------
-% %%|
-% %%`---------------------------------------------------------------------
+% ============================================================================
+\section[DG Formulation]{SIP DG Formulation for Anisotropic Stokes}
+% ============================================================================
+\label{sec:Stokes-dg-formulation}
+
+\begin{frame}{Steady Stokes equations}
+   Find
+  $(\ww,\pp)\in \big(H_0^1(\Omega)\big)^d\times L_0^2(\Omega)$ such
+  that
+  \begin{equation}
+    \left\{
+      \begin{aligned}
+        - \nu\Delta\ww + \grad\pp &= \ff,
+        \\
+        \div\ww  &= 0,
+      \end{aligned}
+    \right.
+  \end{equation}
+\end{frame}
+ %  in a weak sense.
+
+ % It is well-known that this problem can be
+ %    expressed as a mixed formulation which is well-posed in the sense
+ %    of Hadamard.
+ %    In this section, we consider a well-known SIP-DG discretization
+ %    of~(\ref{eq:Stokes.a})--(\ref{eq:Stokes.b}) based on equal-order
+ %    velocities and pressures.  (see
+ %    .e.g.\cite{di_pietro_ern_2012,Riviere:2008} and references therein
+ %    included).
+
+\begin{frame}
+  \begin{equation*}
+    \Wh = (\Pd k)^{d}, \quad
+    \Pho = \Pd k\cap L_0^2(\Omega)
+  \end{equation*}
+  and the following Stokes SIP DG bilinear forms: for all
+  $\wwh,\bwwh \in \Wh$, $\ph\in\Pho$,
+  % $a_h^{\text{Sto}}:\Wh\times\Wh \to \Rset$ and
+  % $b_h^{\text{Sto}}:\Wh\times\Pho \to \Rset$,
+  \begin{align}
+    \label{eq:Stokes:SIP:a}
+    a_h^{\text{Sto}}(\wwh,\bwwh) &= \sum_{i=1}^{d} \asip[sip , \eta](w_i,\overline w_i),\\
+    \label{eq:Stokes:SIP:b}
+    b_h^{\text{Sto}}(\wwh, \ph )&=
+                                          -\int_{\Omega} \ph\, \gradh \cdot \wwh + \sum_{e\in\Eh} \int_e \jump{\wwh} \cdot \nn_e\, \average{\ph}.
+  \end{align}
+
+\end{frame}
+%---------------------------------------------------------------------
+\begin{frame}{DG Bilinear Form for Anisotropic Stokes}
+% ---------------------------------------------------------------------
+  \medskip
+  \small
+  % \begin{itemize}
+    % \itemsep=1em
+  % \item
+  \structure{\bf Order \underline{$k$} polynomials for \underline{\textit{velocity}} and \underline{\textit{pressure}}}: \llaveizq{$\wwh=(\uuh,v_h)\in\WWh$, \\
+    $\ph \in \Ph$,}
+    \begin{align*}
+      \WWh&=\UUh\times\Vh=(\Pd k)^d, \quad \UUh = (\Pd k)^{d-1}, \quad \Vh=\Pd k
+      \\
+      \Ph &= \Pd k.
+    \end{align*}
+    % For each $\wwh=(\uuh,\vh)$ and $\bwwh=(\buuh,\bvh) \in\WWh$, with
+    % $\uuh=(u_i)_{i=1}^{d-1}$ and $\buuh=(\overline u_i)_{i=1}^{d-1}$,
+  % \item
+    \medskip
+    \structure{\bf Anisotropic velocity bilinear form}: \enspace
+    $\forall \wwh=(\uuh,\vh),\ \bwwh=(\buuh,\bvh) \in\WWh$,
+    \begin{equation*}
+      a_h(\wwh,\bwwh) = \Big( \sum_{i=1}^{d-1} \asip[sip , \eta](u_i,\overline u_i)
+      + \tikz[na] \node(Laepsilon){\framedmath<2>{\alert<2>{\asip[\varepsilon](\vh,\bvh)}}};
+      \Big),
+    \end{equation*}
+    \vspace{-0.5em}
+    \onslide<2>
+    where
+    \begin{multline*}
+      \alert{\framedmath<2>{\asip[\varepsilon](\vh,\bvh)} =\tikz[na] \coordinate (Raepsilon);}
+      \\
+      \alert{ \varepsilon \,\asip[sip, 0](\vh,\bvh)
+      + \eta\sum_{e\in\Eh} \frac1{h_e} \int_e \Big( \varepsilon
+      \jump{\vh\nx}\jump{\bvh\nx} + \jump{\vh\nz}\jump{\bvh\nz} \Big),}
+    \end{multline*}
+    \begin{itemize}
+    \item[$\star$] \scriptsize $\varepsilon$--dependent bilinear form,
+      standard $\vh$ SIP stabilizing term is replaced by anisotropic term
+    \item[$\star$] Generalization of previous works (for Isotropic \&
+      Hydrostatic viscous
+      fluids~\cite{Guillen-RedondoNeble-RGalvan:17})
+    \end{itemize}
+  \begin{tikzpicture}[overlay]
+    \path<2>[myarrow] (Laepsilon) edge [out=210, in=40] (Raepsilon);
+  \end{tikzpicture}
+\end{frame}
+
+%%,---------------------------------------------------------------------
+%%|
+%%`---------------------------------------------------------------------
+
 %============================================================================
 % \section[Introduction]{Stability of Anisotropic Stokes Equations}
 %============================================================================
@@ -944,58 +1079,6 @@ the DG methods: (...)
 
 
 
-%============================================================================
-% \section[DG Formulation]{SIP DG Formulation for Anisotropic Stokes}
-%============================================================================
-% \label{sec:Stokes-dg-formulation}
-
-% %---------------------------------------------------------------------
-% \begin{frame}{DG Bilinear Form for Anisotropic Stokes}
-% % ---------------------------------------------------------------------
-%   \medskip
-%   \small
-%   % \begin{itemize}
-%     % \itemsep=1em
-%   % \item
-%   \structure{\bf Order \underline{$k$} polynomials for \underline{\textit{velocity}} and \underline{\textit{pressure}}}: \llaveizq{$\wwh=(\uuh,v_h)\in\WWh$, \\
-%     $\ph \in \Ph$,}
-%     \begin{align*}
-%       \WWh&=\UUh\times\Vh=(\Pd k)^d, \quad \UUh = (\Pd k)^{d-1}, \quad \Vh=\Pd k
-%       \\
-%       \Ph &= \Pd k.
-%     \end{align*}
-%     % For each $\wwh=(\uuh,\vh)$ and $\bwwh=(\buuh,\bvh) \in\WWh$, with
-%     % $\uuh=(u_i)_{i=1}^{d-1}$ and $\buuh=(\overline u_i)_{i=1}^{d-1}$,
-%   % \item
-%     \medskip
-%     \structure{\bf Anisotropic velocity bilinear form}: \enspace
-%     $\forall \wwh=(\uuh,\vh),\ \bwwh=(\buuh,\bvh) \in\WWh$,
-%     \begin{equation*}
-%       a_h(\wwh,\bwwh) = \Big( \sum_{i=1}^{d-1} \asip[sip , \eta](u_i,\overline u_i)
-%       + \tikz[na] \node(Laepsilon){\framedmath<2>{\alert<2>{\asip[\varepsilon](\vh,\bvh)}}};
-%       \Big),
-%     \end{equation*}
-%     \vspace{-0.5em}
-%     \onslide<2>
-%     where
-%     \begin{multline*}
-%       \alert{\framedmath<2>{\asip[\varepsilon](\vh,\bvh)} =\tikz[na] \coordinate (Raepsilon);}
-%       \\
-%       \alert{ \varepsilon \,\asip[sip, 0](\vh,\bvh)
-%       + \eta\sum_{e\in\Eh} \frac1{h_e} \int_e \Big( \varepsilon
-%       \jump{\vh\nx}\jump{\bvh\nx} + \jump{\vh\nz}\jump{\bvh\nz} \Big),}
-%     \end{multline*}
-%     \begin{itemize}
-%     \item[$\star$] \scriptsize $\varepsilon$--dependent bilinear form,
-%       standard $\vh$ SIP stabilizing term is replaced by anisotropic term
-%     \item[$\star$] Generalization of previous works (for Isotropic \&
-%       Hydrostatic viscous
-%       fluids~\cite{Guillen-RedondoNeble-RGalvan:17})
-%     \end{itemize}
-%   \begin{tikzpicture}[overlay]
-%     \path<2>[myarrow] (Laepsilon) edge [out=210, in=40] (Raepsilon);
-%   \end{tikzpicture}
-% \end{frame}
 
 % %---------------------------------------------------------------------
 % \begin{frame}{Partial $\varepsilon$--dependent Coercivity}
