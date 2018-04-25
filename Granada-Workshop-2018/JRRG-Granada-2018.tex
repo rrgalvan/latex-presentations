@@ -173,6 +173,8 @@
 
 \AtBeginSection{\frame{\sectionpage}}
 
+\renewcommand{\vv}{v}
+\renewcommand{\VV}{V}
 
 %======================================================================
 \begin{document}
@@ -238,43 +240,43 @@
 %============================================================================
 
 
-%---------------------------------------------------------------------
-\begin{frame}{Distributional Derivatives}
-%---------------------------------------------------------------------
-  \begin{itemize}\itemsep0.9em
-  \item
-    $D(\Omega)= \big\{ \Phi\in C^\infty(\Omega) \text{ with compact
-      support in } \Omega \big\}$
-  \item $D'(\Omega)$ (dual space): space of \alert{distributions}
-    \medskip
-    \begin{itemize}
-    \item Then $L^2(\Omega) \hookrightarrow D'(\Omega)$ \qquad
-      ($v\in L^2(\Omega)\mapsto v(\Phi)=\int_\Omega v\phi$)
-  \end{itemize}
-\item \alert{Distributional derivative}: $\forall v\in D'(\Omega)$,
-  $\forall\alpha=(\alpha_1,\dots,\alpha_d)\in\Nset^d$,
-  $\partial^\alpha v \in D'(\Omega)$ is defined as:
-    % $$\small
-    % \langle \partial^\alpha v, \Phi \rangle_{D',D} = \partial^\alpha v(\Phi)
-    % :=
-    % \langle  v, (-1)^{|\alpha|}\partial^\alpha\Phi \rangle_{D',D} =
-    % $$
-    $$\small
-    \partial^\alpha v(\Phi) := (-1)^{|\alpha|} v(\partial^\alpha\Phi), \quad \forall \Phi\in D(\Omega)
-    $$
-    \vspace{-1em}
-    \begin{itemize}
-    \item Then $\forall v\in L^2(\Omega)$ one has
-      $\partial^\alpha v \in D'(\Omega)$ with:
-    $$\small
-    \partial^\alpha v(\Phi) = (-1)^{|\alpha|}\int_\Omega v \;
-    \frac{\partial^{|\alpha|}\Phi}{\partial
-      x_1^{\alpha_1}\dots\partial x_d^{\alpha_d}}
-    \quad \forall \Phi\in D(\Omega)
-    $$
-  \end{itemize}
-\end{itemize}
-\end{frame}
+% %---------------------------------------------------------------------
+% \begin{frame}{Distributional Derivatives}
+% %---------------------------------------------------------------------
+%   \begin{itemize}\itemsep0.9em
+%   \item
+%     $D(\Omega)= \big\{ \Phi\in C^\infty(\Omega) \text{ with compact
+%       support in } \Omega \big\}$
+%   \item $D'(\Omega)$ (dual space): space of \alert{distributions}
+%     \medskip
+%     \begin{itemize}
+%     \item Then $L^2(\Omega) \hookrightarrow D'(\Omega)$ \qquad
+%       ($v\in L^2(\Omega)\mapsto v(\Phi)=\int_\Omega v\phi$)
+%   \end{itemize}
+% \item \alert{Distributional derivative}: $\forall v\in D'(\Omega)$,
+%   $\forall\alpha=(\alpha_1,\dots,\alpha_d)\in\Nset^d$,
+%   $\partial^\alpha v \in D'(\Omega)$ is defined as:
+%     % $$\small
+%     % \langle \partial^\alpha v, \Phi \rangle_{D',D} = \partial^\alpha v(\Phi)
+%     % :=
+%     % \langle  v, (-1)^{|\alpha|}\partial^\alpha\Phi \rangle_{D',D} =
+%     % $$
+%     $$\small
+%     \partial^\alpha v(\Phi) := (-1)^{|\alpha|} v(\partial^\alpha\Phi), \quad \forall \Phi\in D(\Omega)
+%     $$
+%     \vspace{-1em}
+%     \begin{itemize}
+%     \item Then $\forall v\in L^2(\Omega)$ one has
+%       $\partial^\alpha v \in D'(\Omega)$ with:
+%     $$\small
+%     \partial^\alpha v(\Phi) = (-1)^{|\alpha|}\int_\Omega v \;
+%     \frac{\partial^{|\alpha|}\Phi}{\partial
+%       x_1^{\alpha_1}\dots\partial x_d^{\alpha_d}}
+%     \quad \forall \Phi\in D(\Omega)
+%     $$
+%   \end{itemize}
+% \end{itemize}
+% \end{frame}
 
 
 \begin{frame}{Sobolev Spaces}
@@ -432,9 +434,9 @@ the DG methods: (...)
 
   \item Clearly, $H^m(\Omega)\subset H^m(\Th)$
 
-  \item Particular  case: broken or \structure{discontinuous polynomials} spaces
+  \item Particular  case: broken or \structure{\textbf{discontinuous polynomials}} finite-dimensional spaces
     $$
-    \alert{\Pd{k}(\Th)}=\left\{ v\in L^2(\Omega):\ v|_K\in \P{k}(K),\ \forall K\in\Th \right\}
+    \Vh=\alert{\Pd{k}(\Th)}=\left\{ v\in L^2(\Omega):\ v|_K\in \P{k}(K),\ \forall K\in\Th \right\}
     $$
   % \item Discontinous finite-dimensional subspace of $H^m(\Th)$:
   %   $$
@@ -442,10 +444,10 @@ the DG methods: (...)
   %   \left\{
   %     u\in L^2(\Omega) \ | \ u\in \P{k}(K), \ \forall K\in\Th \right \}.
   %   $$
-    \begin{flushright}
-      \footnotesize
-      \color{gray} Polinomials of degree at most $k$
-    \end{flushright}
+    % \begin{flushright}
+    %   \footnotesize
+    %   \color{gray} Polinomials of degree at most $k$
+    % \end{flushright}
     \begin{itemize}
     \item Discontinuity along the \textbf{edges} (or faces)
     \end{itemize}
@@ -484,7 +486,15 @@ the DG methods: (...)
   \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Important theorems and properties}
+
+  \begin{itemize}
+  \item  Traces, jumps and means theorems (they are bounded in terms of global norms), e.g.
+    \begin{align*}
+      h_K^{1/2} \norm[L^2(\partial K)]{\uh|_K} \le \Ctrace \, \norm[L^2(K)]{\uh},
+    \end{align*}
+    (fundamental to most of following results)
+  \end{itemize}
     \begin{theorem}[Characterization of $H^1(\Omega)$]
       A function $v\in H^m(\Th)$ belongs to $H^1(\Omega)$ if and only if
       $$
@@ -575,6 +585,7 @@ the DG methods: (...)
   \item
     For $f\in L^2(\Omega)$, $g_D\in H^{1/2}(\Gamma_D)$,
     $g_N\in\L^2(\Gamma_N)$, we consider the problem:
+    \begin{block}{}
     \begin{equation*}
       \left\{
         \begin{aligned}
@@ -586,9 +597,10 @@ the DG methods: (...)
         \end{aligned}
       \right.
     \end{equation*}
+  \end{block}
   \item For simplicity: $\Gamma_D=\partial\Omega$, $g_D=0$.
-  \item Lax-Milgram $\Rightarrow$ $\exists!$ weak solution
-    $u\in V=H_0^1(\Omega)$ s. t:
+  \item Lax-Milgram $\Rightarrow$ \alert{$\exists!$ weak solution
+    $u\in V=H_0^1(\Omega)$} s. t:
     \begin{align*}
     \int_\Omega \grad u \grad \bu &= \int_\Omega f\bu \quad \forall \bu\in V
       \\[1ex]
@@ -617,7 +629,7 @@ the DG methods: (...)
   \end{multline*}
   \vspace{-1em}
   \begin{itemize}
-  \item<2> \myframed{Consistency and symmetry}
+  \item<2> \myframed{Consistency $+$ symmetry}
   \item<3> \myframed{Coercivity (for $\alert<3>{\mathbf{\eta}>0}$ big enough)}
   \end{itemize}
 \end{frame}
@@ -637,7 +649,7 @@ the DG methods: (...)
   \end{definition}
   \begin{lemma}[Coercivity and Continuity]
     \begin{itemize}
-    \item Exists $C(\eta)>0$ such that
+    \item \structure{For $\eta\ge\eta^\star$}, exists $C(\eta)>0$ such that
       \begin{equation*}
         \asip[sip,\eta](\uh,\uh) \ge C(\eta) \normsip{\uh}^2, \quad \forall\,\uh\in \Pd k
       \end{equation*}
@@ -653,25 +665,76 @@ the DG methods: (...)
   \end{flushright}
 \end{frame}
 
+\begin{frame}{DG versus classical FEM}
+  \begin{itemize}\itemsep0.8em
+  \item Age of the method
+  \item Size of linear problems
+  \item Meaning of degrees of freedom
+  \item Hanging nodes, mesh adaptivity
+  \item Increasing (or decreasing) degree of polynomials
+  \item Accuracy (optimal error orders)
+  \item Boundary conditions (weakly imposed in DG)
+  \item Mass conservation (verified in DG)
+  \end{itemize}
+\end{frame}
+
 % ============================================================================
-\section[DG Formulation]{SIP DG Formulation for Anisotropic Stokes}
+\section[Stokes Formulation]{SIP DG Formulation for \textbf{Stokes} Problem}
 % ============================================================================
 \label{sec:Stokes-dg-formulation}
 
-\begin{frame}{Steady Stokes equations}
-   Find
-  $(\ww,\pp)\in \big(H_0^1(\Omega)\big)^d\times L_0^2(\Omega)$ such
-  that
-  \begin{equation}
-    \left\{
+\begin{frame}[allowframebreaks]{Steady Stokes equations}
+  Given $\Omega\subset\Rset^d$ ($d=2,3$) and $\ff\in [L^2(\Omega)]^d$,
+  \begin{equation*}
+    \text{(Stokes)} \left\{
       \begin{aligned}
-        - \nu\Delta\ww + \grad\pp &= \ff,
+        - \nu\Delta\ww + \grad\pp &= \ff &\text{in } \Omega
         \\
-        \div\ww  &= 0,
+        \div\ww  &= 0 &\text{in } \Omega
+        \\
+        \ww&=0 &\text{on }\partial\Omega
       \end{aligned}
+      \qquad~
     \right.
-  \end{equation}
+  \end{equation*}
+  \alert{Mixed variational} formulation: \par\medskip
+  \hfill find
+  $(\ww,\pp)\in \WW\times\PP = \big[H_0^1(\Omega)\big]^d\times L_0^2(\Omega)$ such
+  that
+  \medskip
+  \begin{equation*}
+    \text{(Mixed Stokes)} \left\{
+    \begin{aligned}
+      a(\ww,\bww) + b(\bww,\pp) &= \prodEsc[L^2(\Omega)]{\ff,\bww} &\quad\forall\bww\in \WW
+      \\
+      -b(\ww,\bp) &= 0 &\quad\forall\bp\in\PP
+    \end{aligned}
+    \right.
+  \end{equation*}
+  where...
+  \begin{align*}
+    % \label{eq:Stokes:a}
+    a(\ww,\bww) &= \sum_{i=1}^{d} \prodEsc[L^2(\Omega)]{\grad w_i,\grad \overline w_i}
+    \\
+    % \label{eq:Stokes:b}
+    b(\ww, \pp )&= - \prodEsc[L^2(\Omega)]{\pp, \grad \cdot \ww}
+  \end{align*}
+
+  \begin{theorem}
+    Mixed formulation of Stokes is well posed in the sense of Hadamard
+  \end{theorem}
+  \bigskip
+  \textbf{Proof}: based in the following (inf-sup) inequality:
+  $\exists \gamma>0$,
+  \begin{block}{}
+  \begin{equation*}
+    \gamma\, \norm[L^2(\Omega)]{\pp} \le \sup_{\bww\in\WW}
+    \frac{b(\bww,\pp)}{\norm[\WW]{\bww}} \qquad \forall\pp\in
+    L_0^2(\Omega)
+  \end{equation*}
+\end{block}
 \end{frame}
+
  %  in a weak sense.
 
  % It is well-known that this problem can be
@@ -683,85 +746,149 @@ the DG methods: (...)
  %    .e.g.\cite{di_pietro_ern_2012,Riviere:2008} and references therein
  %    included).
 
-\begin{frame}
+\begin{frame}[allowframebreaks]{SIP \textbf{DG} Formulation of \textbf{Stokes} Problem}
+  For any $k\in\Nset$,
+  \begin{itemize}
+  \item we define the following discrete spaces:
   \begin{equation*}
-    \Wh = (\Pd k)^{d}, \quad
-    \Pho = \Pd k\cap L_0^2(\Omega)
+    \Wh = (\alert{\Pd k})^{d}, \quad
+    \Pho = \alert{\Pd k}\cap L_0^2(\Omega)
   \end{equation*}
-  and the following Stokes SIP DG bilinear forms: for all
-  $\wwh,\bwwh \in \Wh$, $\ph\in\Pho$,
+\item
+  and the following Stokes SIP DG bilinear forms:
   % $a_h^{\text{Sto}}:\Wh\times\Wh \to \Rset$ and
   % $b_h^{\text{Sto}}:\Wh\times\Pho \to \Rset$,
-  \begin{align}
-    \label{eq:Stokes:SIP:a}
-    a_h^{\text{Sto}}(\wwh,\bwwh) &= \sum_{i=1}^{d} \asip[sip , \eta](w_i,\overline w_i),\\
-    \label{eq:Stokes:SIP:b}
-    b_h^{\text{Sto}}(\wwh, \ph )&=
-                                          -\int_{\Omega} \ph\, \gradh \cdot \wwh + \sum_{e\in\Eh} \int_e \jump{\wwh} \cdot \nn_e\, \average{\ph}.
-  \end{align}
+  \begin{align*}
+    % \label{eq:Stokes:SIP:a}
+    \alert{a_h^{\text{Sto}}}(\wwh,\bwwh) &= \sum_{i=1}^{d} \asip[sip , \eta](w_i,\overline w_i)\\
+    % \label{eq:Stokes:SIP:b}
+    \alert{b_h^{\text{Sto}}}(\wwh, \ph )&= -\int_{\Omega} \ph\, \gradh \cdot \wwh + \sum_{e\in\Eh} \int_e \jump{\wwh} \cdot \nn_e\, \average{\ph}
+  \end{align*}
+  {\color{gray} for all $\wwh,\bwwh \in \Wh$, $\ph\in\Pho$}
+  \note[item]{Here we denote $\wwh=(w_i)_{i=1}^d$, $ \nabla_h \cdot$ is the
+  ``broken'' divergence operator}
+\note[item]{ The \textbf{last term} appears when applying \textbf{Green's
+  theorem on each element}}.
+\end{itemize}
+
+\framebreak
+%- - - - - - - - - - - - - - - - - - - - - - - - -
+\textbf{Properties}:
+%- - - - - - - - - - - - - - - - - - - - - - - - -
+\bigskip
+\begin{itemize}
+\item \alert{Partial coercivity}:
+for all
+$\eta>\eta_*$, there exists $C(\eta)>0$ such that
+$$
+a_h^{\text{Sto}}(\wwh,\wwh) \ge C(\eta) \normsip{\wwh}^2, \quad \forall\wwh\in\WWh,
+$$
+with the natural energy norm\vspace{-1em}
+$$\normsip{\wwh}^2:=\sum_{i=1}^{d}\normsip{w_i}^2.$$
+
+\note[item]{Just apply SIP-coercivity to each component of $\wwh$}
+
+\item
+  \alert{Continuity of $b_h^{\rm Sto}(\wwh,\ph)$} with respect to the norms $\normsip{\wwh}$ and $\norm[0]{\ph}$ in
+  $\WWh \times \Pho$.
+\end{itemize}
+
+\framebreak
+%- - - - - - - - - - - - - - - - - - - - - - - - -
+\textbf{\alert{DG-SIP Inf-Sup Condition}}:
+%- - - - - - - - - - - - - - - - - - - - - - - - -
+There exists $\beta>0$ such that
+  % \footnote{In this
+      % reference, a zero-mean pressure space is considered, otherwise,
+      % a term depending on the mean of $\ph$ in $\Omega$ would appear
+      % in this inequality.}
+\begin{block}{}
+  \begin{equation*}
+    \beta  \, \norm[0]{\ph}
+    \le \sup_{\wwh \in \WWh \setminus \{0\}} \frac{b_h^{\text{Sto}} ( \wwh, \ph )}{\normsip{\wwh}}
+    + | \ph |_P , \quad \forall \ph \in \Pho.
+  \end{equation*}
+\end{block}
+  \bigskip \textbf{Remark}:%\vspace{-1em}
+  \begin{itemize}
+  \item $\ph$ cannot be
+    controlled uniquely in terms of $b_h^{\text{Sto}}(\cdot,\cdot)$
+  \item In fact, the following extra semi-norm
+  \begin{equation*}
+    |p|_P  = \Big ( \sum_{e\in\Ehi} h_e \int_e \jump{p}^2 \Big )^{1/2}
+  \end{equation*}
+  must be added to the usual discrete Stokes inf-sup condition.
+\end{itemize}
+
+\framebreak
+%- - - - - - - - - - - - - - - - - - - - - - - - -
+Then we consider the following discretization
+% of~(\ref{eq:Stokes.a})--(\ref{eq:Stokes.b}) is considered for
+of Stokes equations:
+\begin{equation*}
+\begin{aligned}
+  % \label{DG-Stokes.a}
+    a_h^{\text{Sto}} ( \wwh, \bwwh) +b_h^{\text{Sto}} ( \bwwh, \ph )
+    &= (\ff, \bwwh) \quad
+    &\forall \,\bwwh \in \WWh
+  \\
+  % \label{DG-Stokes.b}
+    -b_h^{\text{Sto}} (\wwh, \bph) + \structure{s_h^p (\ph, \bph)} &=0
+    \quad &\forall\, \bph \in \Pho
+  \end{aligned}
+\end{equation*}
+  where the stabilization bilinear form
+  \begin{equation*}
+    % \label{s_h^p-def}
+    \structure{s_h^p (\ph, \bph)} =  \sum_{e\in\Ehi} h_e \, \int_e
+    \jump{\ph} \, \jump{\bph}
+  \end{equation*}
+  is introduced to control $\norm[0]{\ph}$ by the DG inf-sup
 
 \end{frame}
-%---------------------------------------------------------------------
-\begin{frame}{DG Bilinear Form for Anisotropic Stokes}
-% ---------------------------------------------------------------------
-  \medskip
-  \small
-  % \begin{itemize}
-    % \itemsep=1em
-  % \item
-  \structure{\bf Order \underline{$k$} polynomials for \underline{\textit{velocity}} and \underline{\textit{pressure}}}: \llaveizq{$\wwh=(\uuh,v_h)\in\WWh$, \\
-    $\ph \in \Ph$,}
-    \begin{align*}
-      \WWh&=\UUh\times\Vh=(\Pd k)^d, \quad \UUh = (\Pd k)^{d-1}, \quad \Vh=\Pd k
-      \\
-      \Ph &= \Pd k.
-    \end{align*}
-    % For each $\wwh=(\uuh,\vh)$ and $\bwwh=(\buuh,\bvh) \in\WWh$, with
-    % $\uuh=(u_i)_{i=1}^{d-1}$ and $\buuh=(\overline u_i)_{i=1}^{d-1}$,
-  % \item
-    \medskip
-    \structure{\bf Anisotropic velocity bilinear form}: \enspace
-    $\forall \wwh=(\uuh,\vh),\ \bwwh=(\buuh,\bvh) \in\WWh$,
-    \begin{equation*}
-      a_h(\wwh,\bwwh) = \Big( \sum_{i=1}^{d-1} \asip[sip , \eta](u_i,\overline u_i)
-      + \tikz[na] \node(Laepsilon){\framedmath<2>{\alert<2>{\asip[\varepsilon](\vh,\bvh)}}};
-      \Big),
-    \end{equation*}
-    \vspace{-0.5em}
-    \onslide<2>
-    where
-    \begin{multline*}
-      \alert{\framedmath<2>{\asip[\varepsilon](\vh,\bvh)} =\tikz[na] \coordinate (Raepsilon);}
-      \\
-      \alert{ \varepsilon \,\asip[sip, 0](\vh,\bvh)
-      + \eta\sum_{e\in\Eh} \frac1{h_e} \int_e \Big( \varepsilon
-      \jump{\vh\nx}\jump{\bvh\nx} + \jump{\vh\nz}\jump{\bvh\nz} \Big),}
-    \end{multline*}
-    \begin{itemize}
-    \item[$\star$] \scriptsize $\varepsilon$--dependent bilinear form,
-      standard $\vh$ SIP stabilizing term is replaced by anisotropic term
-    \item[$\star$] Generalization of previous works (for Isotropic \&
-      Hydrostatic viscous
-      fluids~\cite{Guillen-RedondoNeble-RGalvan:17})
-    \end{itemize}
-  \begin{tikzpicture}[overlay]
-    \path<2>[myarrow] (Laepsilon) edge [out=210, in=40] (Raepsilon);
-  \end{tikzpicture}
+
+\begin{frame}{Well Posedness of SIP-DG Stokes}
+\begin{small}
+  We denote
+  \begin{align*}
+    c_h^{\rm Sto}((\wwh,\ph),(\bwwh,\bph)) =&\ a_h^{\rm Sto}(\wwh,\bwwh) + b_h^{\rm Sto}(\bwwh,\ph)
+                               % \label{eq:ch.Sto}
+    \\[0.3em]\notag
+                             &- b_h^{\rm Sto}(\wwh,\bph) + s_h^p(\ph,\bp).
+  \end{align*}
+ And we consider
+  \begin{equation*}
+    \norm[\Xh]{(\wwh,\ph)}^2=\ \normsip{\wwh}^2 + \norm[0]{\ph}^2 + |\ph|_P^2
+                               % \label{eq:norm.Xh}
+  \end{equation*}
+\end{small}
+  \begin{theorem}[Stability]
+There exists $\gamma>0$ such that
+  for all $(\wwh,\ph)\in\Xh=\WWh\times\Pho$,
+  \begin{equation*}
+    % \label{eq:Stokes.global-staiblity}
+    \gamma\norm[\Xh]{(\wwh,\ph)} \le
+    \sup_{(\bwwh,\bph)\in\Xh}
+    \frac{c_h^{\rm Sto}((\wwh,\ph),(\bwwh,\bph))}{\norm[\Xh]{(\bwwh,\bph)}}
+  \end{equation*}
+\end{theorem}
+% \medskip
+% \textbf{Proof} See e.g. [Di Pietro -- Ern 2012]
+\begin{corollary}
+Well-Posedness of SIP-DG-Stokes
+\end{corollary}
 \end{frame}
 
-%%,---------------------------------------------------------------------
-%%|
-%%`---------------------------------------------------------------------
 
-%============================================================================
-% \section[Introduction]{Stability of Anisotropic Stokes Equations}
-%============================================================================
+
+% ============================================================================
+\section[Introduction]{Anisotropic Stokes Equations}
+% ============================================================================
 % \label{sec:introduction}
 
 % \begin{frame}{Anisotropic equations for (large scale) ocean}
 % %----------------------------------------------------------------------
-%   \begin{itemize}\itemsep0.5em
-%   \item<1> \structure{The ocean:} A slightly compressible fluid
+%   \begin{itemize}\itemsep0.5em %   \item<1> \structure{The ocean:} A slightly compressible fluid
 %     endowed with Coriolis and buoyancy forces and a set of
 %     conservation laws from
 %     Physics
@@ -942,83 +1069,413 @@ the DG methods: (...)
 %   \end{tikzpicture}
 % \end{frame}
 
-% %--------------------------------------------------------------------------
-% \begin{frame}{Steady Anisotropic Stokes equations}
-% %--------------------------------------------------------------------------
-%   \color{darkgray}{\small Thus we are interested in numerical resolution of:}
-%   \bigskip
-%   \begin{center}\large
-%     \textit{mixed anisotropic velocity/pressure problems}
-%   \end{center}
-%   \bigskip
-%   \begin{center}
-%     \uncover<2>{... when $\framedmath<2>{\varepsilon\to 0}$}
-%   \end{center}
-%   \begin{block}{Steady Anisotropic Stokes equations}
-%     \begin{equation*}
-%       \begin{aligned}
-%         - \nu\Delta\uu + \gradx\pp &= \ff,
-%         \\
-%         \framedmath<2>{-\varepsilon^2 \Delta\vv} + \dz\pp &= 0,
-%         \\
-%         \divx\uu + \dz\vv &= 0.
-%       \end{aligned}
-%     \end{equation*}
-%   \end{block}
-% \end{frame}
+%--------------------------------------------------------------------------
+\begin{frame}[allowframebreaks]{Steady Anisotropic Stokes equations}
+%--------------------------------------------------------------------------
+  \color{darkgray}{\small Now we are interested in numerical resolution of:}
+  \smallskip
+  \begin{block}{}
+    \begin{center}\large
+      \textit{\alert{flow equations with \textbf{anisotropic} vertical/horizontal viscosity coefficients}}
+    \end{center}
+  \end{block}
+  \begin{itemize}\itemsep1em
+  \item Type of equations: mixed \textbf{anisotropic} velocity/pressure problems
+  \item  E.g. in large scale Ocean dynamics, where\medskip\small
+    \begin{equation*}
+      \varepsilon = \frac{\text{vertical
+          scales}}{\text{horizontal scales}}~
+    \begin{tabular}[t]{l} is \large\textbf{small} \\[-0.2ex]
+      \tiny\it ~ $10^{-3}$, $10^{-4}$\end{tabular}
+    \quad \text{...we can even suppose } \framedmath{\varepsilon\to 0}
+  \end{equation*}
+  % \begin{flushright}
+  %   {... we can suppose $\framedmath{\varepsilon\to 0}$}
+  % \end{flushright}
+  \end{itemize}
+  % \bigskip
+   \begin{center}
+     \includegraphics[width=0.4\textwidth]{img/domain}
+   \end{center}
+  \begin{block}{Steady Anisotropic Stokes equations}
+    \begin{equation*}
+      \begin{aligned}
+        - \Delta\uu + \gradx\pp &= \ff,
+        \\
+        -\framedmath{\varepsilon} \Delta\vv + \dz\pp &= g,
+        \\
+        \divx\uu + \dz\vv &= 0.
+      \end{aligned}
+    \end{equation*}
+  \end{block}
+
+  \begin{itemize}\itemsep1em
+  \item When $\varepsilon\to 0$, we only expect
+  $$v\in H^1_z(\Omega)=\big\{\overline v\in L^2(\Omega),
+  \dz\overline\vv\in L^2(\Omega)\big\}$$
+
+\item
+  Let us consider
+  the boundary conditions:
+  \begin{align*}
+    \nu\dz\uu|_{\surfaceBoundary} &= \gs,
+    \quad
+    \uu|_{\bottomBoundary\cup\talusBoundary}=0 ,
+                              % \label{eq:bc.1}
+    \\
+    \vv|_{\surfaceBoundary} &=0, \quad
+    % \intertext{adherence on bottom and talus:}
+    \vv|_{\bottomBoundary} =0,
+                             % \label{eq:bc.2}
+    \quad
+    % \intertext{and slip condition on talus:}
+    \varepsilon\gradx\vv \cdot \mathbf{n_x}|_\talusBoundary =0,
+                                                              % \label{eq:bc.3}
+  \end{align*}
+
+\item We look for $\ww=(\uu,\vv)\in\WW=\UU\times\VV$, \quad $\pp\in\PP$,
+  \begin{align*}
+    \UU&=\Uspace=\Big\{\uu\in \big[H^1(\Omega)\big]^{d-1} {: \ }
+         \uu|_{\bottomBoundary\cup\talusBoundary}=0\Big\},
+         % \label{eq:Uspace}
+    \\
+    \VV&=\Vspace =\Big\{\vv\in L^2(\Omega){: \ } \dz\vv\in L^2(\Omega),\
+        \vv|_{\surfaceBoundary\cup\bottomBoundary}=0\Big\},
+        % \label{eq:Vspace}
+    \\
+    \PP&=\Pspace=\Big\{\pp\in L^2(\Omega){: \ } \int_\Omega\pp=0
+         \Big\}.
+         % \label{eq:Pspace}
+  \end{align*}
+\end{itemize}
+\end{frame}
 
 
-% %--------------------------------------------------------------------------
-% \begin{frame}{Not Easy Task!}
-% %--------------------------------------------------------------------------
-%   \begin{center}
-%       \begin{tabular}[b]{r}
-%         $\P2/\P1$ F.E.
-%         \\[1ex]
-%         Velocity
-%         \\[1ex]
-%         \alert{$\framedmath{\varepsilon=10^{-2}}$}
-%         \\
-%         \rule{0pt}{0.5\textheight}
-%       \end{tabular}
-%       \includegraphics[width=0.7\linewidth]{img/221-eps-2}
-%   \end{center}
-% \end{frame}
+%--------------------------------------------------------------------------
+\begin{frame}{Variational Formulation}
+%--------------------------------------------------------------------------
+  \small
+Find
+$(\uu,\vv,\pp)\in\UU\times\VV\times\PP$ such that
+\begin{equation*}
+  \begin{aligned}
+    (\grad\uu,\grad\buu) - (\pp, \divx\buu) &= (\ff,\buu) + (\gs,\buu)_{\Gamma_s}    &\ \forall\,\buu\in\UU,
+    % \label{eq:non-HS.weak.a}
+    \\
+    \varepsilon (\grad\vv,\grad\bv) - (\pp,\dz\bv) & = 0 &  \ \forall\,\bv\in\VV,
+    % \label{eq:non-HS.weak.b}
+    \\
+    (\div(\uu,\vv),\bp) &= 0 &\ \forall\,\bp\in\PP.
+    % \label{eq:non-HS.weak.c}
+  \end{aligned}
+\end{equation*}
+\note[item]{We emphasize that formulation is purely differential and,
+  unlike most usual formulations for Primitive Equations, it avoids
+  vertical integration and also avoids hypotheses of the type
+  $D(\xx)>D_0>0$. Consequently, it facilitates the use of standard (not necessarily structured) meshes and also tools and techniques
+  like mesh adaptivity.}
+\begin{theorem}
+  Anisotropic Stokes equations are well-posed (uniformly when $\varepsilon\to 0$)
+\end{theorem}
+Well posedness hinges on the following inf-sup conditions:
+\begin{alignat}{4}
+  \tag*{\ensuremath{(IS)^\PP}}
+  &\ &
+  \ConstISp \|\pp\|_0 &\le
+  \sup_{0\neq(\uu,\vv)\in \UU \times \VV}
+  \frac{(\div(\uu,\vv),\pp)}{\|(\grad \uu,\, \dz \vv)\|_0}
+  &\qquad &
+  \forall \,\pp \in \PP,
+  \label{eq:ISp}
+  \\\noalign{\smallskip}
+  \tag*{\ensuremath{(IS)^\VV}}
+  &\ &
+  \ConstISv \|\dz\vv\|_0 &\le
+  \sup_{0\neq \pp \in \PP}
+  \frac{(\dz \vv,\pp)}{\|\pp\|_0}
+  &\qquad &
+  \forall\, \vv\in \VV,
+  \label{eq:ISv}
+\end{alignat}
+\pause \alert{Discrete approximations} must verify \alert{discrete
+  versions} of \ref{eq:ISp}, \ref{eq:ISv}
+\end{frame}
 
-% %--------------------------------------------------------------------------
-% \begin{frame}{Not Easy Task!}
-% %--------------------------------------------------------------------------
-%   \begin{center}
-%       \begin{tabular}[b]{r}
-%         $\P2/\P1$ F.E.
-%         \\[1ex]
-%         Velocity
-%         \\[1ex]
-%         \alert{$\framedmath{\varepsilon=10^{-3}}$}
-%         \\
-%         \rule{0pt}{0.5\textheight}
-%       \end{tabular}
-%       \includegraphics[width=0.7\linewidth]{img/221-eps-3}
-%   \end{center}
-% \end{frame}
+%--------------------------------------------------------------------------
+\begin{frame}{Not Easy Task!}
+%--------------------------------------------------------------------------
+  \begin{center}
+      \begin{tabular}[b]{r}
+        Classical $\P2/\P1$ FE,
+        Velocity
+        \\[1ex]
+        \alert{$\framedmath{\varepsilon=10^{-2}}$}
+        \\
+        \rule{0pt}{0.5\textheight}
+      \end{tabular}
+      \includegraphics[width=0.5\linewidth]{img/221-eps-2}
+  \end{center}
+\vfill
+\end{frame}
 
-% %--------------------------------------------------------------------------
-% \begin{frame}{Not Easy Task!}
-% %--------------------------------------------------------------------------
-%   \begin{center}
-%       \begin{tabular}[b]{r}
-%         $\P2/\P1$ F.E.
-%         \\[1ex]
-%         Velocity
-%         \\[1ex]
-%         \alert{$\framedmath{\varepsilon=10^{-4}}$}
-%         \\
-%         \rule{0pt}{0.5\textheight}
-%       \end{tabular}
-%       \includegraphics[width=0.7\linewidth]{img/221-eps-4}
-%   \end{center}
-% \end{frame}
+%--------------------------------------------------------------------------
+\begin{frame}{Not Easy Task!}
+%--------------------------------------------------------------------------
+  \begin{center}
+      \begin{tabular}[b]{r}
+        Classical $\P2/\P1$ FE,
+        Velocity
+        \\[1ex]
+        \alert{$\framedmath{\varepsilon=10^{-3}}$}
+        \\
+        \rule{0pt}{0.5\textheight}
+      \end{tabular}
+      \includegraphics[width=0.5\linewidth]{img/221-eps-3}
+  \end{center}
+\vfill
+\end{frame}
 
+%--------------------------------------------------------------------------
+\begin{frame}{Not Easy Task!}
+%--------------------------------------------------------------------------
+  \begin{center}
+      \begin{tabular}[b]{r}
+        Classical $\P2/\P1$ FE,
+        Velocity
+        \\[1ex]
+        \alert{$\framedmath{\varepsilon=10^{-4}}$}
+        \\
+        \rule{0pt}{0.5\textheight}
+      \end{tabular}
+      \includegraphics[width=0.5\linewidth]{img/221-eps-4}
+  \end{center}
+\vfill\pause
+\begin{center}
+  \alert{
+    \textbf{Idea}: to use DG \quad \Pd k -- \Pd k \quad approximations for Velocity--Pressure!
+  }
+\end{center}
+\end{frame}
+
+
+% ============================================================================
+\section[Introduction]{SIP-DG Approximation of Anisotropic Stokes Equations}
+% ============================================================================
+
+\begin{frame}{Definitions}
+  \alert{Discrete Spaces}:
+\begin{align*}
+  \UUh &= \big[\Pd{k}\big]^{d-1}, \quad \Vh=\Pd{k}, \quad \WWh=\UUh\times\Vh=\big[\Pd{k}\big]^d
+  \\[1ex]
+  \Pho &= \Pd{k}\cap L_0^2(\Omega)
+\end{align*}
+
+\alert{Bilinear form}:
+\vspace{-0.5em}
+\begin{equation*}
+  % \label{eq:bilinear.a}
+  a_h^{\rm anis}(\wwh,\bwwh) =  \sum_{i=1}^{d-1} \asip[sip , \eta](u_i,\overline u_i)
+  +\varepsilon \, \asip[sip , \eta](\vh,\bvh)
+  + (1-\varepsilon) \shv(\vh,\bvh)
+\end{equation*}
+where
+\begin{equation*}
+  \shv(\vh,\bvh) =
+  \sum_{e\in\Eh} \frac1{h_e} \int_e \Big(
+    \jump{\vh\nz}\jump{\bvh\nz} \Big).
+\end{equation*}
+% \vspace{-1.5em}
+\small
+\begin{itemize}
+\item Generalization of $a^{\rm Sto}(\cdot,\cdot)$  \quad $(\varepsilon=1)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Properties}
+  \begin{itemize}
+
+\item \alert{Boundedness of $a_h^{\rm anis}(\cdot,\cdot)$}
+  \medskip
+  \begin{align*}
+    % \label{eq:asip.vh.boundedness}
+    a_h^{\rm anis}(\wwh,\bwwh)  \le C_{\rm bnd}\big( \normsip{\uuh}\normsip{\buuh} +
+    \varepsilon\, \normsip{\vh}\normsip{\bvh} \big)
+    \\ \notag
+    +  (1-\varepsilon) |\vv_h|_V |\bv_h|_V .
+  \end{align*}
+
+  \item
+  \alert{$\varepsilon$--dependent Coercivity of $a_h^{\rm anis}(\cdot,\cdot)$}
+  \medskip
+  For all $\eta>\eta_*$,
+  \begin{equation*}
+    % \label{eq:uv.partial.coercivity}
+    a_h^{\rm anis}(\wwh,\wwh) \ge
+    C(\eta) \big(\normsip{\uuh}^2
+    + \varepsilon  \normsip{\vh}^2  \big)
+    + (1-\varepsilon)|\vh|_V^2
+  \end{equation*}
+  where %$C(\eta)$ is given in Lemma \ref{le:asip.coercivity} and
+  \begin{equation*}
+    % \label{eq:vh_V.bound}
+    |\vh|_V^2 = \sum_{e\in\Eh} \frac1{h_e} \int_e
+    \jump{\vh \nz}^2 .
+  \end{equation*}
+  % where $C_{\eta}^{\varepsilon}=(\eta- \varepsilon \eta_*)/(1+\eta).$
+  % \label{lemma:eps.dependent.coercivity}
+
+  \pause
+  \alert{But we need some way for bounding $\vh$ uniformly on $\varepsilon$}!
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Inf-sup for bounding $\dzh\vh$}
+   \bigskip
+\begin{lemma}
+   For every $\vh\in\Vh$, it holds
+  \begin{equation*}
+    % \label{eq:vh.stability}
+      \norm[0]{\dzh\vh - \mean{\dzh\vh} } =
+    \sup_{\bph \in \Pho}\frac{\int_{\Omega} \bph \, \partial_{z,h}\,\vh}{\|\bph\|_{0}},
+  \end{equation*}
+    where $\mean{\dzh\vh}$ is the mean of $\dzh\vh$ in $\Omega$.
+  % \label{lemma:vh.stability}
+\end{lemma}
+% \begin{proof}
+%   Given $\vh\in\Vh$,
+%   \nuevo{
+%     and using that $\int_{\Omega} \bph \, \mean{\dzh\vh}=0$ for any $\bph \in \Pho $,
+%   \begin{equation*}
+%     \sup_{\bph \in \Pho}\frac{\int_{\Omega} \bph \, \partial_{z,h}\,\vh}{\|\bph\|_{0}} =
+%     \sup_{\bph \in \Pho}\frac{\int_{\Omega} \bph \left(\partial_{z,h}\,\vh - \mean{\dzh\vh}\right)}{\|\bph\|_{0}}.
+%   \end{equation*}
+%  Therefore, it suffices to note that the supreme on the right hand side
+%   is reached for $\bph= \partial_{z,h} \vh - \mean{\dzh\vh}\in \Pho$.
+%   }
+% \end{proof}
+
+\bigskip
+% $\Rightarrow$
+\alert{\textbf{Good}!} \par
+\begin{center}
+Our \alert{discrete spaces} verify some kind of discrete~\alert{\ref{eq:ISv}}
+\\[0.33em]
+\small (hydrostatic  inf-sup condition)
+\\[1em]
+\normalsize
+At this point, \textbf{stability} (uniformly
+on~$\varepsilon\to 0$) hinges on a \\
+\alert{bound of $\norm[0]{\ph}$}. % The
+\end{center}
+\end{frame}
+
+\begin{frame}{Inf-sup for $\ph$}
+\begin{lemma} There exists $\ConstISph > 0$ independent of $h$, such that
+  \begin{equation*}
+    \ConstISph  \,
+      \norm[0]{\ph}
+    \le \sup_{\wwh \in \WWh \setminus \{0\}} \frac{b_h^{\rm Sto} ( \wwh, \ph )}{\structure{\normveleps{\wwh}}}
+    + | \ph |_P , \quad \forall \ph \in \Pho.
+    \label{eq:ph.stability}
+  \end{equation*}
+  \label{lemma:ph.stability}
+\end{lemma}
+Where
+\begin{equation}  \label{w-anis-norm}
+ \structure{\normveleps{\wwh}} = \left(\normsip{\uuh}^2 + \alert{\normveleps{\vh}^2}\right)^{1/2},
+\end{equation}
+being
+\small
+ $$
+ \alert{\normveleps{\vh}^2}
+ =\varepsilon \|\nabla_{{\bf x},h} v_h\|_0^2 + \alert{\norm[0]{\dzh\vh}}^2
++ \sum_{e\in\Eh} \frac1{h_e} \int_e \Big( \varepsilon\jump{\vh \nx}^2+\alert{\jump{\vh \nz}}^2  \Big).
+$$
+
+
+\end{frame}
+
+
+\begin{frame}{Anisotropic DG Scheme}
+  Discretization of the Anisotropic Stokes
+  problem:\medskip
+  \par\hfill {\small find $(\wwh, \ph) \in \WWh \times \Pho$ such that}
+\alert{
+\begin{equation*}
+  \begin{aligned}  % \label{disc-var-pb.a}
+  a_h^{\rm anis} ( \wwh, \bwwh) +b_h^{\rm Sto} ( \bwwh, \ph )
+  &= \int_{\Omega}\! \ff \cdot \buuh
+   \!+\! \int_{\Gamma_s}\! \gs \cdot \buuh,
+  \\  % \label{disc-var-pb.b}
+  -b_h^{\rm Sto} (\wwh, \bph) + s_h^p (\ph, \bph)
+  % + \pEpsilon
+  %   \int_\Omega \ph\bph
+  &=0,
+\end{aligned}
+\end{equation*}
+}
+\hfill {\small\color{gray} $\forall \,\bwwh=(\buuh,\vh) \in \WWh$  \ and \  $\forall\, \bph \in \Pho$}.
+
+Or equivalently
+\alert{
+\begin{equation*}
+  c_h^{\rm anis} \big ( (\wwh,\ph), ( \bwwh, \bph) \big )=\displaystyle\int _{\Omega} \ff \cdot \buuh
+  + \int_{\Gamma_s} \gs\cdot\buuh , \
+  % \label{eq:hydrostatic.reformulation}
+\end{equation*}
+}
+\hfill {\color{gray}\small $\forall (\bwwh, \bph) \in \WWh \times \Pho$}
+
+{\small
+  Where
+\begin{multline*}
+c_h^{\rm anis} \big( (\wwh,\ph), ( \bwwh, \bph) \big)= a_h^{\rm anis} ( \wwh, \bwwh)
++b_h^{\rm Sto} ( \bwwh, \ph )
+\\
+-b_h^{\rm Sto} (\wwh, \bph) + s_h^p (\ph, \bph). % +\pEpsilon\int_\Omega \ph \bph.
+\label{eq:bilinear.c}
+\end{multline*}
+}
+\end{frame}
+
+\begin{frame}{Well-Posedness of SIP-DG Anisotropic Stokes}
+We consider  the following norm in $\Xh =\WWh \times \Pho$:
+\begin{equation*}
+  \| (\wwh, \ph)\|^2_{\varepsilon,\Xh} = \normveleps{{\bf w}_h}^2 + \| \ph
+  \|_{0}^2 + |\ph|_P^2
+%   =
+%   \\
+%   \normsip{\uuh}^2
+%   +
+% \normveleps{\vh}^2
+%   + \| \ph \|_{0}^2 + |\ph|_P^2.
+  % =
+  % \normsip{\uuh}^2
+  % \\
+  % +\varepsilon\norm[0]{\gradxh\vh}^2 + \norm[0]{\dzh\vh}^2 +
+  %   \seminormVeps{\vh}^2
+  %  + \| \ph \|_{0}^2 + |\ph|_P^2.
+\end{equation*}
+\begin{theorem}[Inf-Sup Stability]
+  \label{teor.well-posedness}
+  Assume that that $ \eta > \eta_*$. Then,
+  there exists $\gamma >0$ independent of $h$ such that, for all
+  $(\wwh, \ph) \in \Xh= \WWh \times \Pho$, one has
+  \begin{equation}
+    \label{eq:global.inf-sup}
+      \gamma \,\| (\wwh, \ph)\|_{\varepsilon,\Xh}
+    \le \sup_{(\bwwh,\bph)\in \Xh \setminus
+      \{0\}} \frac{c_h^{\rm anis} ( (\wwh, \ph), (\bwwh,\bph)  ) }{\norm[\varepsilon,\Xh]{(\bwwh,\bph)} }.
+  \end{equation}
+\end{theorem}
+According to Banach-Necas-Babu\v{s}ka Theorem we have:
+%
+\begin{corollary}
+Well-Posedness of SIP-DG-Stokes
+\end{corollary}
+
+\end{frame}
 % %--------------------------------------------------------------------------
 % \begin{frame}{Instability of \textit{Classical} Finite Elements}
 % %--------------------------------------------------------------------------
@@ -1055,26 +1512,6 @@ the DG methods: (...)
 %         dofs($\alert{p}$)}
 %     \end{center}
 %   \end{itemize}
-% \end{frame}
-
-% %---------------------------------------------------------------------
-% \begin{frame}{How to proceed?}
-% %---------------------------------------------------------------------
-%   \begin{description}
-%     \itemsep=1.5em
-%   \item[Idea 1] To introduce \textbf{new \emph{anisotropic} F.E.}~\cite{fguillen-rrgalvan-paper2-NumMath:2015,fguillen-rrgalvan-paper1-ApNumMath:2016}
-%     \begin{flushright}\it
-%       (which verify~\ref{eq:ISp} and also~\ref{eq:ISv})
-%     \end{flushright}
-%   \item[Idea 2] To introduce \textbf{new \emph{stabilized} schemes}~\cite{fguillen-rrgalvan-paper3-SIAM:2015}
-%     \begin{flushright}\it
-%       (which do not require~\ref{eq:ISv})
-%     \end{flushright}
-%   \item<2>[Idea 3] To \myframed{\textbf{Explore Discontinuous Galerkin F.E.}}
-%     \begin{flushright}\it
-%       (which, in some sense, verify~\ref{eq:ISp} and also~\ref{eq:ISv})
-%     \end{flushright}
-%   \end{description}
 % \end{frame}
 
 
@@ -1143,37 +1580,175 @@ the DG methods: (...)
 %   \end{itemize}
 % \end{frame}
 
-% %% ,---------------------------------------------------------------------
-% %%| Conclusions and future work
-% %%`---------------------------------------------------------------------
-% \begin{frame}{Conclusions}
-%   \begin{itemize}\itemsep0.66em
-%   \item<1-> We have developed \alert{new schemes} for approximation of
-%     Primitive Equations of the Ocean (or even Anisotropic Navier-Stokes)
+\section{Numerical Tests}
+\label{sec:numerical-tests}
+
+\begin{frame}{\textbf{Cavity tests} for Anisotropic Equations}
+  \textbf{Aim}: \alert{test qualitative behavior of DG solution when $\varepsilon \to 0$}
+  \begin{itemize}
+  \item FreeFem++
+  \item $\Omega=(0,1)^2$, mesh: $h\simeq 1/30$
+  \item Dirichlet boundary conditions:
+    \begin{itemize}
+    \item \alert{Surface} boundary:
+      $\Gamma_s$: $\uh=x(1-x)$ and $\vh=0$
+    \item \alert{Bottom}: ($\Gamma_b$): $\uh=0$ and $\vh=0$
+    \item Lateral \alert{walls}: ($\Gamma_l$): $\uh=0$
+    \end{itemize}
+  \item Neumann boundary conditions on lateral \alert{walls} $\Gamma_l$:
+    $\varepsilon\grad\vh\cdot\nn=0$
+  \item SIP DG, $\Pd{1}$, interior penalty: $\eta=5$.
+  \item As usual in DG methods, Dirichlet boundary conditions are
+    \textbf{\alert{imposed weakly}}
+    \begin{itemize}
+    \item {\color{gray} Specifically, for each jump and mean boundary
+        term appearing in DG bilinear forms, we add a corresponding
+        term to the RHS containing the boundary value}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\newcommand{\graphHratio}{0.47}
+\newcommand{\graphVratio}{0.47}
+
+\begin{frame}{\textbf{Test 1}. Anisotropic equations, $\varepsilon=1$ (Stokes case)}
+\begin{center}
+  \begin{tabular}[c]{cc}
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/v-eps1}
+    &
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/p-eps1}
+  \end{tabular}
+  \\[1em]
+  \textbf{Figure 1.} Cavity test, $\varepsilon=1$.
+\end{center}
+\end{frame}
+
+\begin{frame}{\textbf{Test 2}. Anisotropic equations, $\varepsilon=10^{-8}$ and $\varepsilon=0$ (Hydrostatic case)}
+\begin{center}
+  \begin{tabular}[c]{cc}
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/v-eps0}
+    &
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/p-eps0}
+  \end{tabular}
+  \\[1em]
+  \textbf{Figure 2.} Cavity test, $\varepsilon=10^{-8}$ and $\varepsilon=0$.
+\end{center}
+\end{frame}
+
+\renewcommand{\graphHratio}{0.33}
+\renewcommand{\graphVratio}{0.33}
+\begin{frame}{\textbf{Test 3}. Necessity of Anisotropic Term}
+\begin{center}
+  \begin{tabular}[c]{@{}c@{}c@{}c@{}}
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/test-eps0}
+    &
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/test-eps1e-1}
+    &
+    \includegraphics[
+    width=\graphHratio\linewidth,
+    height=\graphVratio\linewidth
+    ]{img/test-eps1e-2}
+  \end{tabular}
+  \\[1em]
+  \textbf{Figure 3.} Anisotropic DG scheme, \alert{without}
+  the term \alert{$(1-\varepsilon) \shv(\vh,\bvh)$} for $\varepsilon=1$,
+  $\varepsilon=10^{-2}$ and $\varepsilon=10^{-4}$, respectively.
+\end{center}
+\end{frame}
+
+% %---------------------------------------------------------------------
+% \begin{frame}{DG Bilinear Form for Anisotropic Stokes}
+% % ---------------------------------------------------------------------
+%   \medskip
+%   \small
+%   % \begin{itemize}
+%     % \itemsep=1em
+%   % \item
+%   \structure{\bf Order \underline{$k$} polynomials for \underline{\textit{velocity}} and \underline{\textit{pressure}}}: \llaveizq{$\wwh=(\uuh,v_h)\in\WWh$, \\
+%     $\ph \in \Ph$,}
+%     \begin{align*}
+%       \WWh&=\UUh\times\Vh=(\Pd k)^d, \quad \UUh = (\Pd k)^{d-1}, \quad \Vh=\Pd k
+%       \\
+%       \Ph &= \Pd k.
+%     \end{align*}
+%     % For each $\wwh=(\uuh,\vh)$ and $\bwwh=(\buuh,\bvh) \in\WWh$, with
+%     % $\uuh=(u_i)_{i=1}^{d-1}$ and $\buuh=(\overline u_i)_{i=1}^{d-1}$,
+%   % \item
+%     \medskip
+%     \structure{\bf Anisotropic velocity bilinear form}: \enspace
+%     $\forall \wwh=(\uuh,\vh),\ \bwwh=(\buuh,\bvh) \in\WWh$,
+%     \begin{equation*}
+%       a_h(\wwh,\bwwh) = \Big( \sum_{i=1}^{d-1} \asip[sip , \eta](u_i,\overline u_i)
+%       + \tikz[na] \node(Laepsilon){\framedmath<2>{\alert<2>{\asip[\varepsilon](\vh,\bvh)}}};
+%       \Big),
+%     \end{equation*}
+%     \vspace{-0.5em}
+%     \onslide<2>
+%     where
+%     \begin{multline*}
+%       \alert{\framedmath<2>{\asip[\varepsilon](\vh,\bvh)} =\tikz[na] \coordinate (Raepsilon);}
+%       \\
+%       \alert{ \varepsilon \,\asip[sip, 0](\vh,\bvh)
+%       + \eta\sum_{e\in\Eh} \frac1{h_e} \int_e \Big( \varepsilon
+%       \jump{\vh\nx}\jump{\bvh\nx} + \jump{\vh\nz}\jump{\bvh\nz} \Big),}
+%     \end{multline*}
 %     \begin{itemize}
-%     \item Avoiding velocity instabilities of (quasi-)hydrostatic
-%       formulations
+%     \item[$\star$] \scriptsize $\varepsilon$--dependent bilinear form,
+%       standard $\vh$ SIP stabilizing term is replaced by anisotropic term
+%     \item[$\star$] Generalization of previous works (for Isotropic \&
+%       Hydrostatic viscous
+%       fluids~\cite{Guillen-RedondoNeble-RGalvan:17})
 %     \end{itemize}
-%   \item<2-> \alert{Standard FE tools and techniques} like mesh adaptation
-%     can be used, in \alert{more general meshes} than previous schemes
-%   \item<3-> Two different approached have been followed:
-%     \begin{itemize}
-%     \item New \alert{stable combinations of FE} (unequal
-%       approximation of velocity components)
-%     \item Reformulation of space schemes, \alert{stabilizing vertical
-%       velocity}. Hence standard Stokes--stable FE can be applied
-%     \end{itemize}
-%   \item<4-> Successfully applied to \alert{time-dependent problems},
-%     including \alert{variable density}
-%   \end{itemize}
-%   \uncover<5>{
-%   \begin{center}\it
-%     {In short, we have successfully introduced \textbf{a new approach}\\
-%     for modelling \textbf{realistic hydrostatic and quasi-hydrostatic fluids},\\
-%     justifying it both \textbf{analytically and numerically}.
-%   }
-% \end{center}
-% }
+%   \begin{tikzpicture}[overlay]
+%     \path<2>[myarrow] (Laepsilon) edge [out=210, in=40] (Raepsilon);
+%   \end{tikzpicture}
+% \end{frame}
+
+%%,---------------------------------------------------------------------
+%%|
+%%`---------------------------------------------------------------------
+
+%% ,---------------------------------------------------------------------
+%%| Conclusions and future work
+%%`---------------------------------------------------------------------
+\begin{frame}{Conclusions}
+  \begin{itemize}\itemsep0.66em
+  \item DG methods relax constraints of Galerkin approximate solutions to EDP's
+  \item Therefore \alert{DG methods offer new possibilities}
+  \item We have \alert{taken advantage} of them for approximation of
+    \alert{Anisotropic Stokes} equations
+
+  \item \textbf{\alert{Future}}: Study DG applying in other
+    topics of our interest
+    \begin{itemize}
+    \item (non-linear) Navier-Stokes equations
+    \item Solidification
+    \item Keller-Segel equations
+    \item ...
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\end{document}
 
 % \end{frame}
 % \begin{frame}{~}
@@ -1186,17 +1761,17 @@ the DG methods: (...)
 %   \end{flushright}
 % \end{frame}
 
-%%,-------------
-%%| Bibliography
-%%`-------------
+% %%,-------------
+% %%| Bibliography
+% %%`-------------
 
-\setbeamertemplate{footline}[default]
+% \setbeamertemplate{footline}[default]
 
-\begin{frame}[allowframebreaks]{Bibliography}
-\bibliographystyle{alpha}
-%\bibliographystyle{abbrvnat}
-\bibliography{biblio-short.bib}
-\end{frame}
+% \begin{frame}[allowframebreaks]{Bibliography}
+% \bibliographystyle{alpha}
+% %\bibliographystyle{abbrvnat}
+% \bibliography{biblio-short.bib}
+% \end{frame}
 
 \end{document}
 
