@@ -380,7 +380,8 @@ migratory stream} (\alert{RMS}).
 %=====================================================================
 \begin{frame}{The Classical Keller-Segel System}
 %---------------------------------------------------------------------
-\framezoom<2><0>[border=3](5.10cm,0.75cm)(1.9cm,1.15cm)
+\framezoom<2><0>[border=3](4.72cm,0.85cm)(1.70cm,0.80cm)
+\framezoom<3><0>[border=3](4.35cm,0.85cm)(0.35cm,0.80cm)
   We focus on the \textit{classical system}
     in $\Omega\times(0,T)\subset\mathbb{R}^{n+1}$:
     \begin{quotation}
@@ -388,24 +389,28 @@ migratory stream} (\alert{RMS}).
     \label{K-S}
     \left\{
       \begin{array}{ll@{}}
-        \uu_t- \kB\Delta \uu + {\chi\nabla\cdot( \uu\nabla \vv)}=0, &  \quad {\color{gray}x\in\Omega,\, t>0,}\\
+        \uu_t- \kB\Delta \uu + {\chi\; \nabla\cdot( \uu\nabla \vv)}=0, &  \quad {\color{gray}x\in\Omega,\, t>0,}\\
         \vv_t- \kC\Delta \vv + \kD \vv - \kE \uu=0, &  \quad {\color{gray}x\in\Omega,\, t>0.}
       \end{array}\right.
   \end{equation*}
 \end{quotation}
 \vspace{-1em}
   \begin{itemize}\itemsep0.66em
-  \item<2-> \alert{Chemotaxis term} (nonlinear) %{\color{gray}Hyperbolic effects expected if $\alpha_1\!\gg$}
-  \item<3-> Parameters $\alpha_i>0$,
-    \llaveizq{ $\alpha_1>0$ $\Rightarrow$ \structure{chemoattractant} model \\
-     $\alpha_1<0$ $\Rightarrow$ \structure{chemoarepulsive} model \\
+  \item<2-> \alert{Chemotaxis term}\dotfill nonlinear convection of $\uu$ by $\nabla\vv$ %{\color{gray}Hyperbolic effects expected if $\alpha_1\!\gg$}
+  \item<3-> Chemotaxis parameter:
+    \llaveizq{ $\chi>0$ $\Rightarrow$ chemo\alert{attractant} model \\
+     $\chi<0$ $\Rightarrow$ chemo\alert{repulsive} model \\
     }
-  \item<3-> \small Boundary conditions
+  \item<4-> \small Boundary conditions
     $$
     \frac{\partial u}{\partial \nu}=\frac{\partial v}{\partial \nu}=0, {\color{gray}\quad x\in\partial\Omega,\, t>0.}
     $$
-  \item<3-> \small Initial conditions (important \structure{rule in long-time} behaviour):
-    $$ u(x,0)=u_0(x), \quad v(x,0)=v_0(x), \qquad {\color{gray}x\in\Omega.}$$
+  \item<4-> \small Initial conditions
+    $ u(x,0)=u_0(x), \quad v(x,0)=v_0(x), \qquad {\color{gray}x\in\Omega}.$
+    \vspace{0.2em}
+    \begin{flushright}
+       Important \structure{rule in long-time} behaviour.
+    \end{flushright}
 \end{itemize}
 
 \end{frame}
@@ -416,7 +421,22 @@ migratory stream} (\alert{RMS}).
 %=====================================================================
 \begin{frame}{Local Existence, Positivity and Blow-up}
 %---------------------------------------------------------------------
+  \vspace{-3em}
+    \begin{flushright}
+      \small
+  \begin{equation*}\def\arraystretch{1.2}
+    \label{K-S}
+    \qquad
+    \left\{
+      \begin{array}{ll@{}}
+        \uu_t- \kB\Delta \uu + {\chi\; \nabla\cdot( \uu\nabla \vv)}=0, &  \quad {\color{gray}x\in\Omega,\, t>0,}\\
+        \vv_t- \kC\Delta \vv + \kD \vv - \kE \uu=0, &  \quad {\color{gray}x\in\Omega,\, t>0.}
+      \end{array}\right.
+  \end{equation*}
+\end{flushright}
+
   A general result\footnote{%
+    \tiny
     \color{gray} This result is also valid for more general
     Keller-Segel equations see
     e.g.~\cite{winkler_bellomo_toward_2015}, Lemma~3.1}:
@@ -428,6 +448,7 @@ migratory stream} (\alert{RMS}).
   \item Then \enspace \llaveizq{$\exists \Tmax \in(0,+\infty]$ and\\[0.9ex]
     $\alert{\exists!u, v}\in C^0\big(\overline\Omega\times
       (0,\Tmax)\big)$} \quad such that\footnote{%
+      \tiny
       \color{gray} In fact, also
       $u, v\in C^{2,1}\big(\overline\Omega\times [0,\Tmax)\big)$
       $v\in L^\infty_{\mbox{loc}}([0,\Tmax); W^{1,q}(\Omega))$}
@@ -439,6 +460,7 @@ migratory stream} (\alert{RMS}).
     \begin{itemize}\itemsep0.66em
     \item $(u,v)$ \structure{solves} classical Keller-Segel equations in $\Omega\times (0,\Tmax)$
     \item \alert{$u,v\ge 0$} (\textbf{\alert{positivity}} of solution)
+    \item Other properties: \alert{mass conservation} for $\uu$, energy dissipation...
     \item If ${\Tmax<+\infty}$ $\Rightarrow$
       ${\norm[L^\infty(\Omega)]{u}} +
       {\norm[W^{1,q}(\Omega)]{v}}\to\infty$ as $t\nearrow\Tmax$
@@ -450,72 +472,91 @@ migratory stream} (\alert{RMS}).
 \end{frame}
 %=====================================================================
 
-%=====================================================================
-\begin{frame}{Other Properties}
-%---------------------------------------------------------------------
-  \begin{itemize}
-  \item \alert{Mass conservation}: If $u$ is a regular enough solution
-    in $\Omega\times(0,T)$,
-    $$
-    \int_\Omega u(\cdot,t) = \int_\Omega u_0 \quad \forall t\in(0,T).
-    $$
-  \item \alert{Energy dissipation}:
-    $$
-    \structure{\frac{d}{dt}\E\big(u(\cdot,t),v(\cdot,t)\big)
-    =
-    -\D\big(u(\cdot,t),v(\cdot,t)\big)} \quad \forall t\in(0,T),$$
-    \small
-    with
-    \begin{align*}
-     \E(u,v)&=\frac12 \int_\Omega |\grad v|^2 + \int_\Omega v^2 - \int_\Omega u\*v + \int_\Omega u\*\ln u,\\
-     \D(u,v)&=\int_\Omega v_t^2+ \int_\Omega \left| \frac{\grad u}{\sqrt u} - \sqrt u \grad v \right|^2.
-    \end{align*}
-    \point \textit{Crucial role in theoretical results (global existence, blow-up...)}
-  \end{itemize}
-\end{frame}
-%=====================================================================
+% %=====================================================================
+% \begin{frame}{Other Properties}
+% %---------------------------------------------------------------------
+%   \begin{itemize}
+%   \item \alert{Mass conservation}: If $u$ is a regular enough solution
+%     in $\Omega\times(0,T)$,
+%     $$
+%     \int_\Omega u(\cdot,t) = \int_\Omega u_0 \quad \forall t\in(0,T).
+%     $$
+%   \item \alert{Energy dissipation}:
+%     $$
+%     \structure{\frac{d}{dt}\E\big(u(\cdot,t),v(\cdot,t)\big)
+%     =
+%     -\D\big(u(\cdot,t),v(\cdot,t)\big)} \quad \forall t\in(0,T),$$
+%     \small
+%     with
+%     \begin{align*}
+%      \E(u,v)&=\frac12 \int_\Omega |\grad v|^2 + \int_\Omega v^2 - \int_\Omega u\*v + \int_\Omega u\*\ln u,\\
+%      \D(u,v)&=\int_\Omega v_t^2+ \int_\Omega \left| \frac{\grad u}{\sqrt u} - \sqrt u \grad v \right|^2.
+%     \end{align*}
+%     \point \textit{Crucial role in theoretical results (global existence, blow-up...)}
+%   \end{itemize}
+% \end{frame}
+% %=====================================================================
+
+% %=====================================================================
+% \begin{frame}{Theorem (Global Existence and Boundedness)}
+% %---------------------------------------------------------------------
+
+%   \begin{scriptsize}
+%   \begin{itemize}
+%   \item  Assume $u_0\in C^0(\overline\Omega)$, \enspace
+%     $v_0\in \bigcup_{q>n} W^{1,q}(\Omega)$,
+%   \item  Let
+%     $(u,v)$ maximal solution of classical K-S.
+%   \end{itemize}
+% \end{scriptsize}
+%   \textbf{Then}
+%   \begin{itemize}\itemsep1em
+%   \item If \alert{$n=1$} or \alert{$n=2$} \big(with \structure{$\int_\Omega u_0<4\pi$} for $n=2$\big)%
+%     \footnote{\gris{It is enough $\int_\Omega u_0 <8\pi$ if $\Omega$ is a disc and $(u_0,v_0)$ radially symmetric}}
+%     \par\medskip
+%     \quad $\Rightarrow$\enspace $(u,v)$ \emph{exists globally}  in time and is bounded, i.e.
+%     $$
+%     \structure{
+%       \norm[L^\infty(\Omega)]{u(\cdot,t)}
+%       +\norm[L^\infty(\Omega)]{v(\cdot,t)} \le C} \quad \forall t>0.
+%   $$
+% \item If \alert{$n\ge 3$}: $\exists \varepsilon,\lambda >0$ such that
+%   \begin{small}\vspace{-0.5em}
+%     $$
+%     \mbox{if}\quad
+%     \norm[L^{n/2}(\Omega)]{u_0}<\varepsilon, \quad
+%     \norm[W^{1,n}(\Omega)]{u_0}<\varepsilon,
+%     $$
+%   \end{small}
+%     \quad$\Rightarrow$ $(u,v)$ \emph{exists globally} in time and satisfies
+%     $$
+%     \structure{    \norm[L^\infty(\Omega)]{u(\cdot,t)-\overline{u_0}}
+%       + \norm[L^\infty(\Omega)]{v(\cdot,t)-\overline{v_0}} \le C e^{-\lambda t}}
+%       \quad\forall t>0.
+%     $$
+%   \end{itemize}
+%   \vfill
+% \end{frame}
+% %=====================================================================
+
+%============================================================================
+\section{Numerical Approximation of Diffusion-Convection equations}
+%============================================================================
 
 %=====================================================================
-\begin{frame}{Theorem (Global Existence and Boundedness)}
+\begin{frame}{Taxonomy of PDE}
 %---------------------------------------------------------------------
+  \begin{align*}
+    \text{Elliptic type}
+    &
+    \u_t + \div(
 
-  \begin{scriptsize}
-  \begin{itemize}
-  \item  Assume $u_0\in C^0(\overline\Omega)$, \enspace
-    $v_0\in \bigcup_{q>n} W^{1,q}(\Omega)$,
-  \item  Let
-    $(u,v)$ maximal solution of classical K-S.
-  \end{itemize}
-\end{scriptsize}
-  \textbf{Then}
-  \begin{itemize}\itemsep1em
-  \item If \alert{$n=1$} or \alert{$n=2$} \big(with \structure{$\int_\Omega u_0<4\pi$} for $n=2$\big)%
-    \footnote{\gris{It is enough $\int_\Omega u_0 <8\pi$ if $\Omega$ is a disc and $(u_0,v_0)$ radially symmetric}}
-    \par\medskip
-    \quad $\Rightarrow$\enspace $(u,v)$ \emph{exists globally}  in time and is bounded, i.e.
-    $$
-    \structure{
-      \norm[L^\infty(\Omega)]{u(\cdot,t)}
-      +\norm[L^\infty(\Omega)]{v(\cdot,t)} \le C} \quad \forall t>0.
-  $$
-\item If \alert{$n\ge 3$}: $\exists \varepsilon,\lambda >0$ such that
-  \begin{small}\vspace{-0.5em}
-    $$
-    \mbox{if}\quad
-    \norm[L^{n/2}(\Omega)]{u_0}<\varepsilon, \quad
-    \norm[W^{1,n}(\Omega)]{u_0}<\varepsilon,
-    $$
-  \end{small}
-    \quad$\Rightarrow$ $(u,v)$ \emph{exists globally} in time and satisfies
-    $$
-    \structure{    \norm[L^\infty(\Omega)]{u(\cdot,t)-\overline{u_0}}
-      + \norm[L^\infty(\Omega)]{v(\cdot,t)-\overline{v_0}} \le C e^{-\lambda t}}
-      \quad\forall t>0.
-    $$
-  \end{itemize}
-  \vfill
+    \text{Parabolic type} &
+    \text{Hyperbolic type} &
+  \end{align*}
 \end{frame}
-%=====================================================================
+
+
 
 \end{document} %########################################## !!!!!!!!!!!
 
