@@ -1,0 +1,212 @@
+\section{PINNs}
+    
+    \begin{frame}{Motivation and Application}
+        \begin{block}{}
+            \alert{PINNs} is the acronym for Physics-Informed Neural Networks.
+        \end{block}
+        \vspace{0.4cm}
+        
+        PINNs are used as a tool to approximate:
+        \begin{itemize}
+            \item \structure{Forward problems}: solution of a PDE.
+            \item \structure{Inverse problem}: parameters of a PDE, given data.
+        \end{itemize}
+        \vspace{0.4cm}
+        
+        \begin{block}{Problem Setup}
+            Find $u$ defined in $\overline{\Omega}\times[0,T]$ such that
+            \begin{align*}
+                u_t+\mathcal{N}(u)&=0, &&x\in\Omega, t\in (0,T),\\
+                u(x,0)&=u_0,  &&x\in\Omega,\\
+                \mathcal{B}(u)&=g, &&x\in\partial\Omega, t\in(0,T).
+            \end{align*}
+        \end{block}
+    \end{frame}
+    
+    \begin{frame}{Mathematical Framework}
+        \begin{block}{}
+            \begin{itemize}
+                \item Let \alert{$\hat u$} the approximation given by PINNs.
+                \item Let $\alert{F(x, t)}=\hat u_t(x,t)+\mathcal{N}(\hat u(x,t))$ be the residual.
+            \end{itemize}
+        \end{block}
+        
+        \vspace*{0.5cm}
+        Collocation points:
+        \begin{itemize}
+            \item $\alert{\{x^i_F, t ^i_F, \hat u^i_F\}_{i=1}^{N_F}}$, where $(x^i_F, t ^i_F)\in\Omega\times(0,T]$.
+            \item $\alert{\{x^i_0, 0, \hat u^i_0\}_{i=1}^{N_0}}$, where $x^i_0\in\overline\Omega$.
+            \item $\alert{\{x^i_b, t ^i_b, \hat u^i_b\}_{i=1}^{N_b}}$, where $(x^i_b, t ^i_b)\in\partial\Omega\times(0,T]$.
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Mathematical Framework}
+        \begin{block}{Loss function}
+            $$\alert{Loss} = MSE_F+MSE_0+MSE_b.$$
+            \begin{itemize}
+                \item $\alert{MSE_F}=\sum_{i=1}^{N_F}\vert F(x_i, t_i)\vert^2$.
+                \item $\alert{MSE_0}=\sum_{i=0}^{N_0}\vert u_0(x_i)-\hat u(x_i, 0)\vert^2$.
+                \item $\alert{MSE_b}=\sum_{i=0}^{N_b}\vert \mathcal{B}(\hat u(x_i,t_i))-g(x_i,t_i)\vert^2$.
+            \end{itemize}
+        \end{block}
+    \end{frame}
+    
+    \begin{frame}{PINN Architecture}
+        \vspace*{-0.2cm}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.5]{img/PINN_architecture.png}
+            \caption{Taken from [Mao et al., 2020].}
+        \end{figure}
+        
+        \vspace*{-0.2cm}
+        {
+        \small
+        \structure{Particular case:} [2 neurons] + [40 neurons] * 3 + [1 neuron].
+        }
+    \end{frame}
+    
+    \begin{frame}{Example}
+        \begin{block}{Convection Equation}
+            \vspace*{-0.4cm}
+            \begin{align*}
+            u_t+\chi u_x&=0, &&(x, t)\in[0,1]\times[0, 1],\\
+            u(x,0)&=Kxe^{-(x/C)^2}, &&x\in[0,1],\\
+            u(0,t)&=0, &&t\in[0,1].
+            \end{align*}
+        \end{block}
+        
+        \vspace*{0.4cm}
+        \structure{Maximum principle:}
+        $$ 0=\min_xu(x,0)\le u(x,t)\le \max_x u(x,0)=\frac{CK}{\sqrt{2e}}, \quad\forall(x,t)\in[0,1]\times[0,1].$$
+        
+        \vspace*{0.4cm}
+        \structure{Particular case:} $\chi=2$, $K=1$, $C=0.1$.
+    \end{frame}
+    
+    \begin{frame}{Activation Functions}
+        \begin{itemize}
+            \item \structure{sigmoid + Output rescaling}:
+            $$\sigma(u)\in[0,1],\Longrightarrow \hat u= (\max u_0-\min u_0)\sigma(\hat u_{\text{out}})+\min u_0.$$
+            \item \structure{tanh + Output rescaling}:
+            $$\tanh(u)\in[-1,1],\Longrightarrow \hat u=(\max u_0-\min u_0)\frac{1+\tanh(\hat{u}_{\text{out}})}{2}+\min u_0.$$
+            \item \structure{Regularized ReLU}:
+            $$\alert{RReLU(u)}=\max u_0-ReLU(\max u_0 - (ReLU(u-\min u_0) + \min u_0)).$$
+        \end{itemize}
+    
+        \begin{block}{}
+            Preserve the \structure{maximum principle} in the approximation.
+        \end{block}
+    \end{frame}
+    
+    \begin{frame}{Activation Functions}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.5]{img/loss_functions.png}
+        \end{figure}
+    \end{frame}
+    
+    \begin{frame}{Approximations}
+            \hspace*{0.5cm}
+            \vspace*{-0.5cm}
+            \begin{minipage}{0.49\textwidth}
+                \vspace*{-0.6cm}
+                \scriptsize
+                \underline{Errors}
+                \begin{itemize}
+                    \item \alert{RReLU --- $1.1632\cdot 10^{-4}$}
+                    \item sigmoid --- $1.1586\cdot 10^{-2}$
+                    \item tanh --- $5.5429\cdot 10^{-4}$
+                \end{itemize}
+            \end{minipage}
+            \begin{minipage}{0.39\textwidth}
+                {\centering
+                \includegraphics[scale=0.31]{img/PINN_u_t-0,0.png}
+                }
+            \end{minipage}
+        
+            {\color{lightgray}\hrule}
+            
+            \vspace*{0.05cm}
+            \begin{minipage}{0.59\textwidth}
+                {\centering
+                \includegraphics[scale=0.31]{img/PINN_u_t-0,25.png}
+                }
+            \end{minipage}
+            \begin{minipage}{0.39\textwidth}
+                    \scriptsize
+                    \underline{Errors}
+                    \begin{itemize}
+                        \item \alert{RReLU --- $1.1645\cdot10^{-4}$}
+                        \item sigmoid --- $1.1666\cdot10^{-2}$
+                        \item tanh --- $5.5834\cdot 10^{-4}$
+                    \end{itemize}
+            \end{minipage}
+    \end{frame}
+    
+    \begin{frame}{Approximations}
+        \hspace*{0.5cm}
+        \vspace*{-0.5cm}
+        \begin{minipage}{0.49\textwidth}
+            \vspace*{-0.6cm}
+            \scriptsize
+            \underline{Errors}
+            \begin{itemize}
+                \item \alert{RReLU --- $0.0$}
+                \item sigmoid --- $2.1892\cdot 10^{-3}$
+                \item tanh --- $1.8551\cdot 10^{-4}$
+            \end{itemize}
+        \end{minipage}
+        \begin{minipage}{0.39\textwidth}
+            {\centering
+                \includegraphics[scale=0.31]{img/PINN_u_t-0,5.png}
+            }
+        \end{minipage}
+        
+        {\color{lightgray}\hrule}
+        
+        \vspace*{0.05cm}
+        \begin{minipage}{0.59\textwidth}
+            {\centering
+                \includegraphics[scale=0.31]{img/PINN_u_t-1,0.png}
+            }
+        \end{minipage}
+        \begin{minipage}{0.39\textwidth}
+            \scriptsize
+            \underline{Errors}
+            \begin{itemize}
+                \item \alert{RReLU --- $0.0$}
+                \item sigmoid --- $1.8739\cdot 10^{-3}$
+                \item tanh --- $1.2906\cdot 10^{-9}$
+            \end{itemize}
+        \end{minipage}
+    \end{frame}
+    
+    \begin{frame}{PINNs vs Finite Elements Method}
+        \vspace*{-0.3cm}
+        \begin{figure}
+            \begin{subfigure}{0.49\textwidth}
+                \centering
+                \includegraphics[scale=0.28]{img/PINN-FE_u_t-0,0.png}
+            \end{subfigure}
+            \begin{subfigure}{0.49\textwidth}
+                \centering
+                \includegraphics[scale=0.28]{img/PINN-FE_u_t-0,25.png}
+            \end{subfigure}
+            \begin{subfigure}{0.49\textwidth}
+                \centering
+                \includegraphics[scale=0.28]{img/PINN-FE_u_t-0,5.png}
+            \end{subfigure}
+            \begin{subfigure}{0.49\textwidth}
+                \centering
+                \includegraphics[scale=0.28]{img/PINN-FE_u_t-1,0.png}
+            \end{subfigure}
+        \end{figure}
+    \end{frame}
+    
+    \begin{frame}{PINNs vs Finite Element Method}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.5]{img/PINN-FE_max-min.png}
+        \end{figure}
+    \end{frame}
