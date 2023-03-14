@@ -1,0 +1,4 @@
+\babel@toc {spanish}{}
+\beamer@sectionintoc {1}{Redes Neuronales}{2}{0}{1}
+\beamer@sectionintoc {2}{Ajuste de los parámetros}{12}{0}{2}
+\beamer@sectionintoc {3}{Migración de neuroblastos en el cerebro adulto}{13}{0}{3}
